@@ -4,28 +4,28 @@ const Skills = () => {
     {
       title: "Frontend",
       skills: [
-        { name: "React", level: 95 },
-        { name: "TypeScript", level: 90 },
-        { name: "Vue.js", level: 85 },
-        { name: "Tailwind CSS", level: 92 }
+        { name: "React", icon: "⚛️", description: "Biblioteca para interfaces de usuario" },
+        { name: "TypeScript", icon: "📘", description: "JavaScript con tipado estático" },
+        { name: "Vue.js", icon: "💚", description: "Framework progresivo para UI" },
+        { name: "Tailwind CSS", icon: "🎨", description: "Framework CSS utility-first" }
       ]
     },
     {
       title: "Backend",
       skills: [
-        { name: "Node.js", level: 88 },
-        { name: "Python", level: 85 },
-        { name: "PostgreSQL", level: 80 },
-        { name: "MongoDB", level: 75 }
+        { name: "Node.js", icon: "🟢", description: "Runtime de JavaScript en servidor" },
+        { name: "Python", icon: "🐍", description: "Lenguaje versátil y potente" },
+        { name: "PostgreSQL", icon: "🐘", description: "Base de datos relacional avanzada" },
+        { name: "MongoDB", icon: "🍃", description: "Base de datos NoSQL flexible" }
       ]
     },
     {
       title: "Tools & Others",
       skills: [
-        { name: "Git", level: 90 },
-        { name: "Docker", level: 75 },
-        { name: "AWS", level: 70 },
-        { name: "Figma", level: 85 }
+        { name: "Git", icon: "📂", description: "Control de versiones distribuido" },
+        { name: "Docker", icon: "🐳", description: "Contenedores para aplicaciones" },
+        { name: "AWS", icon: "☁️", description: "Servicios de nube escalables" },
+        { name: "Figma", icon: "🎯", description: "Herramienta de diseño colaborativo" }
       ]
     }
   ];
@@ -51,16 +51,16 @@ const Skills = () => {
               <h3 className="text-2xl font-semibold text-white mb-6 text-center">{category.title}</h3>
               <div className="space-y-4">
                 {category.skills.map((skill, skillIndex) => (
-                  <div key={skillIndex}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-slate-300">{skill.name}</span>
-                      <span className="text-blue-400">{skill.level}%</span>
+                  <div 
+                    key={skillIndex}
+                    className="flex items-center space-x-4 p-4 bg-slate-800/50 rounded-lg border border-slate-600 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105"
+                  >
+                    <div className="text-3xl">
+                      {skill.icon}
                     </div>
-                    <div className="w-full bg-slate-700 rounded-full h-2">
-                      <div 
-                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000 ease-out"
-                        style={{ width: `${skill.level}%` }}
-                      ></div>
+                    <div className="flex-1">
+                      <h4 className="text-lg font-semibold text-white">{skill.name}</h4>
+                      <p className="text-sm text-slate-400">{skill.description}</p>
                     </div>
                   </div>
                 ))}

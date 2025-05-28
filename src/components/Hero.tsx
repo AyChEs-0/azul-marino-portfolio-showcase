@@ -2,8 +2,34 @@
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 
 const Hero = () => {
+  const programmingLogos = [
+    { name: 'React', icon: '⚛️', position: 'top-20 left-20' },
+    { name: 'TypeScript', icon: '📘', position: 'top-40 right-20' },
+    { name: 'JavaScript', icon: '🟨', position: 'bottom-40 left-40' },
+    { name: 'Node.js', icon: '🟢', position: 'top-60 left-60' },
+    { name: 'Python', icon: '🐍', position: 'bottom-20 right-40' },
+    { name: 'Vue.js', icon: '💚', position: 'top-32 right-60' },
+    { name: 'HTML', icon: '🔴', position: 'bottom-60 left-20' },
+    { name: 'CSS', icon: '🔵', position: 'top-80 right-80' },
+    { name: 'Git', icon: '📂', position: 'bottom-32 right-20' },
+    { name: 'Docker', icon: '🐳', position: 'top-48 left-80' }
+  ];
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      {/* Background Programming Logos */}
+      <div className="absolute inset-0 opacity-20">
+        {programmingLogos.map((logo, index) => (
+          <div
+            key={index}
+            className={`absolute ${logo.position} text-6xl animate-float`}
+            style={{ animationDelay: `${index * 0.5}s` }}
+          >
+            {logo.icon}
+          </div>
+        ))}
+      </div>
+
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-float"></div>
