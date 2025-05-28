@@ -3,16 +3,16 @@ import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 
 const Hero = () => {
   const programmingLogos = [
-    { name: 'React', icon: '⚛️', position: 'top-20 left-20' },
-    { name: 'TypeScript', icon: '📘', position: 'top-40 right-20' },
-    { name: 'JavaScript', icon: '🟨', position: 'bottom-40 left-40' },
-    { name: 'Node.js', icon: '🟢', position: 'top-60 left-60' },
-    { name: 'Python', icon: '🐍', position: 'bottom-20 right-40' },
-    { name: 'Vue.js', icon: '💚', position: 'top-32 right-60' },
-    { name: 'HTML', icon: '🔴', position: 'bottom-60 left-20' },
-    { name: 'CSS', icon: '🔵', position: 'top-80 right-80' },
-    { name: 'Git', icon: '📂', position: 'bottom-32 right-20' },
-    { name: 'Docker', icon: '🐳', position: 'top-48 left-80' }
+    { name: 'React', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', position: 'top-20 left-20' },
+    { name: 'TypeScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg', position: 'top-40 right-20' },
+    { name: 'JavaScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg', position: 'bottom-40 left-40' },
+    { name: 'Node.js', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg', position: 'top-60 left-60' },
+    { name: 'Python', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', position: 'bottom-20 right-40' },
+    { name: 'Vue.js', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg', position: 'top-32 right-60' },
+    { name: 'HTML', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg', position: 'bottom-60 left-20' },
+    { name: 'CSS', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg', position: 'top-80 right-80' },
+    { name: 'Git', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg', position: 'bottom-32 right-20' },
+    { name: 'Docker', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg', position: 'top-48 left-80' }
   ];
 
   return (
@@ -22,10 +22,14 @@ const Hero = () => {
         {programmingLogos.map((logo, index) => (
           <div
             key={index}
-            className={`absolute ${logo.position} text-6xl animate-float`}
+            className={`absolute ${logo.position} animate-float`}
             style={{ animationDelay: `${index * 0.5}s` }}
           >
-            {logo.icon}
+            <img 
+              src={logo.src} 
+              alt={logo.name}
+              className="w-16 h-16 md:w-20 md:h-20"
+            />
           </div>
         ))}
       </div>
