@@ -1,27 +1,23 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import Dashboard from './components/views/Dashboard';
+import Players from './components/views/Players';
+import Teams from './components/views/Teams';
+import MatchTracker from './components/views/MatchTracker';
+import Standings from './components/views/Standings';
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
-
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="jugadores" element={<Players />} />
+          <Route path="equipos" element={<Teams />} />
+          <Route path="partido" element={<MatchTracker />} />
+          <Route path="clasificacion" element={<Standings />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
