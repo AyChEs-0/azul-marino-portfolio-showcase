@@ -46,7 +46,6 @@ export default function Teams() {
 
   return (
     <div className="animate-fade-in space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-black text-ir-dark">🧩 Equipos</h1>
         <p className="text-gray-500 text-sm mt-1">
@@ -54,7 +53,6 @@ export default function Teams() {
         </p>
       </div>
 
-      {/* Generate button */}
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div>
@@ -69,7 +67,7 @@ export default function Teams() {
           </div>
           <div className="flex flex-col items-end gap-2">
             {confirmRegen && (
-              <p className="text-sm text-amber-600 font-medium">¿Regenerar y perder los equipos actuales?</p>
+              <p className="text-sm text-amber-600 font-medium">¿Regener ar y perder los equipos actuales?</p>
             )}
             <div className="flex gap-2">
               {confirmRegen && (
@@ -87,7 +85,7 @@ export default function Teams() {
                   canGenerate
                     ? confirmRegen
                       ? 'bg-amber-500 text-white hover:bg-amber-600'
-                      : 'bg-ir-green text-white hover:bg-ir-dark'
+                      : 'bg-ir-blue text-white hover:bg-ir-dark'
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 }`}
               >
@@ -99,7 +97,6 @@ export default function Teams() {
         </div>
       </div>
 
-      {/* Teams grid */}
       {!hasTeams ? (
         <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
           <div className="text-5xl mb-3">🧩</div>
@@ -119,8 +116,7 @@ export default function Teams() {
             const isEditing = editingId === team.id;
 
             return (
-              <div key={team.id} className={`bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover`}>
-                {/* Team header */}
+              <div key={team.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover">
                 <div className={`${colors.bg} p-4 text-white`}>
                   <div className="flex items-center justify-between gap-2">
                     {isEditing ? (
@@ -155,7 +151,6 @@ export default function Teams() {
                   </p>
                 </div>
 
-                {/* Players list */}
                 <div className="divide-y divide-gray-50">
                   {players
                     .sort((a, b) => b.age - a.age)
@@ -180,7 +175,6 @@ export default function Teams() {
         </div>
       )}
 
-      {/* Legend */}
       {hasTeams && (
         <div className="bg-ir-light rounded-xl p-4 text-sm text-ir-dark">
           <strong>📊 Método:</strong> Los jugadores se ordenan por edad y se distribuyen en rondas alternas (draft en serpiente), garantizando que ningún equipo concentre los más jóvenes ni los más mayores.

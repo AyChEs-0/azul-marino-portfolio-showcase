@@ -29,14 +29,6 @@ export default function Players() {
     p.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const grouped = filtered.reduce<Record<string, typeof state.players>>((acc, p) => {
-    const teamName = p.teamId
-      ? (state.teams.find(t => t.id === p.teamId)?.name ?? 'Sin equipo')
-      : 'Sin equipo';
-    (acc[teamName] ??= []).push(p);
-    return acc;
-  }, {});
-
   const sortedByAge = [...filtered].sort((a, b) => a.age - b.age);
   const avgAge = state.players.length
     ? Math.round(state.players.reduce((s, p) => s + p.age, 0) / state.players.length)
@@ -44,7 +36,6 @@ export default function Players() {
 
   return (
     <div className="animate-fade-in space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-black text-ir-dark">👥 Jugadores</h1>
         <p className="text-gray-500 text-sm mt-1">
@@ -52,7 +43,6 @@ export default function Players() {
         </p>
       </div>
 
-      {/* Add player form */}
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
         <h2 className="font-bold text-gray-800 mb-4">Añadir jugador</h2>
         <form onSubmit={handleAdd} className="flex flex-col sm:flex-row gap-3">
@@ -61,7 +51,7 @@ export default function Players() {
             placeholder="Nombre completo"
             value={name}
             onChange={e => setName(e.target.value)}
-            className="flex-1 border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-green focus:border-transparent"
+            className="flex-1 border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-blue focus:border-transparent"
           />
           <input
             type="number"
@@ -70,11 +60,11 @@ export default function Players() {
             min={5}
             max={80}
             onChange={e => setAge(e.target.value)}
-            className="w-24 border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-green focus:border-transparent"
+            className="w-24 border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-blue focus:border-transparent"
           />
           <button
             type="submit"
-            className="bg-ir-green text-white font-bold px-6 py-2.5 rounded-xl hover:bg-ir-dark transition-colors flex items-center gap-2 justify-center"
+            className="bg-ir-blue text-white font-bold px-6 py-2.5 rounded-xl hover:bg-ir-dark transition-colors flex items-center gap-2 justify-center"
           >
             <span>+</span> Añadir
           </button>
@@ -82,7 +72,6 @@ export default function Players() {
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
       </div>
 
-      {/* Stats bar */}
       {state.players.length > 0 && (
         <div className="grid grid-cols-3 gap-3">
           {[
@@ -99,18 +88,16 @@ export default function Players() {
         </div>
       )}
 
-      {/* Search */}
       {state.players.length > 0 && (
         <input
           type="text"
           placeholder="🔍 Buscar jugador..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-green focus:border-transparent bg-white"
+          className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-blue focus:border-transparent bg-white"
         />
       )}
 
-      {/* Player list */}
       {state.players.length === 0 ? (
         <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
           <div className="text-5xl mb-3">👤</div>
@@ -121,7 +108,7 @@ export default function Players() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
             <span className="font-bold text-gray-700 text-sm">{filtered.length} jugador{filtered.length !== 1 ? 'es' : ''}</span>
-            <span className="text-xs text-gray-400">ordenados por nombre</span>
+            <span className="text-xs text-gray-400">ordenados por edad</span>
           </div>
           <div className="divide-y divide-gray-50">
             {sortedByAge
@@ -139,7 +126,7 @@ export default function Players() {
                     <div className="flex-1 min-w-0">
                       <p className="font-semibold text-gray-800 truncate">{player.name}</p>
                       {team && (
-                        <p className="text-xs text-ir-green font-medium">{team.name}</p>
+                        <p className="text-xs text-ir-blue font-medium">{team.name}</p>
                       )}
                     </div>
                     <span className="text-sm font-bold text-gray-500 bg-gray-100 px-2.5 py-0.5 rounded-full">
@@ -161,7 +148,6 @@ export default function Players() {
         </div>
       )}
 
-      {/* Info tip */}
       {state.players.length < 10 && state.players.length > 0 && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
           <strong>💡 Tip:</strong> Necesitas {10 - state.players.length} jugador{10 - state.players.length !== 1 ? 'es' : ''} más para poder generar equipos de 5 vs 5.

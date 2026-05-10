@@ -16,11 +16,11 @@ export default {
     extend: {
       colors: {
         ir: {
-          green: '#00A651',
-          dark: '#005C2F',
+          blue: '#004B9A',
+          dark: '#002D5F',
           gold: '#F4B900',
-          light: '#E8F5EE',
-          muted: '#B2DFC6',
+          light: '#E8F0FA',
+          muted: '#B2C8E8',
         },
         team: {
           red: '#EF4444',

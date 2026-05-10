@@ -33,7 +33,7 @@ function GoalModal({
             placeholder="Buscar jugador..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ir-green"
+            className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ir-blue"
             autoFocus
           />
           <div className="max-h-60 overflow-y-auto space-y-1">
@@ -43,7 +43,7 @@ function GoalModal({
                 onClick={() => onSelect(p)}
                 className="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-ir-light transition-colors"
               >
-                <span className="w-8 h-8 rounded-full bg-ir-green text-white text-xs font-black flex items-center justify-center">
+                <span className="w-8 h-8 rounded-full bg-ir-blue text-white text-xs font-black flex items-center justify-center">
                   {p.name.charAt(0).toUpperCase()}
                 </span>
                 <div>
@@ -93,7 +93,6 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
   return (
     <>
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        {/* Status bar */}
         <div className="ir-gradient px-5 py-2 flex items-center justify-between">
           {match.status === 'live' ? (
             <span className="flex items-center gap-1.5 text-white text-sm font-bold">
@@ -108,10 +107,8 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
           </span>
         </div>
 
-        {/* Scoreboard */}
         <div className="p-6">
           <div className="grid grid-cols-3 items-center gap-4">
-            {/* Home team */}
             <div className="text-center">
               <div className={`w-14 h-14 ${homeColors.bg} rounded-2xl flex items-center justify-center text-2xl font-black text-white mx-auto shadow-md`}>
                 {home.name.charAt(0)}
@@ -119,14 +116,12 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
               <p className="font-bold text-gray-800 mt-2 text-sm leading-tight">{home.name}</p>
             </div>
 
-            {/* Score */}
             <div className="text-center">
               <div className="score-display text-6xl font-black text-ir-dark">
                 {match.homeScore} <span className="text-gray-300">–</span> {match.awayScore}
               </div>
             </div>
 
-            {/* Away team */}
             <div className="text-center">
               <div className={`w-14 h-14 ${awayColors.bg} rounded-2xl flex items-center justify-center text-2xl font-black text-white mx-auto shadow-md`}>
                 {away.name.charAt(0)}
@@ -135,10 +130,8 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
             </div>
           </div>
 
-          {/* Goal controls */}
           {match.status === 'live' && (
             <div className="grid grid-cols-2 gap-3 mt-6">
-              {/* Home controls */}
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setGoalModal('home')}
@@ -154,7 +147,6 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
                   ↩ Deshacer gol
                 </button>
               </div>
-              {/* Away controls */}
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setGoalModal('away')}
@@ -173,7 +165,6 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
             </div>
           )}
 
-          {/* Goal scorers */}
           {match.goals.length > 0 && (
             <div className="mt-5 pt-4 border-t border-gray-100">
               <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Goleadores</p>
@@ -198,7 +189,6 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
             </div>
           )}
 
-          {/* Finish button */}
           {match.status === 'live' && (
             <button
               onClick={onFinish}
@@ -249,13 +239,11 @@ export default function MatchTracker() {
 
   return (
     <div className="animate-fade-in space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-black text-ir-dark">⚽ Partido</h1>
         <p className="text-gray-500 text-sm mt-1">Gestiona el marcador en tiempo real e introduce los goleadores.</p>
       </div>
 
-      {/* Create match form */}
       {!liveMatch && (
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <h2 className="font-bold text-gray-800 mb-4">Nuevo Partido</h2>
@@ -269,7 +257,7 @@ export default function MatchTracker() {
                   <select
                     value={homeId}
                     onChange={e => setHomeId(e.target.value)}
-                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-green bg-white"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-blue bg-white"
                   >
                     <option value="">Seleccionar equipo...</option>
                     {availableTeams.map(t => (
@@ -282,7 +270,7 @@ export default function MatchTracker() {
                   <select
                     value={awayId}
                     onChange={e => setAwayId(e.target.value)}
-                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-green bg-white"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-blue bg-white"
                   >
                     <option value="">Seleccionar equipo...</option>
                     {availableTeams.map(t => (
@@ -294,7 +282,7 @@ export default function MatchTracker() {
               {formError && <p className="text-red-500 text-sm">{formError}</p>}
               <button
                 type="submit"
-                className="bg-ir-green text-white font-bold px-6 py-2.5 rounded-xl hover:bg-ir-dark transition-colors flex items-center gap-2"
+                className="bg-ir-blue text-white font-bold px-6 py-2.5 rounded-xl hover:bg-ir-dark transition-colors flex items-center gap-2"
               >
                 <span>▶</span> Iniciar Partido
               </button>
@@ -303,7 +291,6 @@ export default function MatchTracker() {
         </div>
       )}
 
-      {/* Live match */}
       {liveMatch && (
         <div className="space-y-2">
           <p className="text-sm font-bold text-red-500 flex items-center gap-1.5">
@@ -313,7 +300,6 @@ export default function MatchTracker() {
         </div>
       )}
 
-      {/* Finished matches */}
       {finishedMatches.length > 0 && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="px-5 py-3 border-b border-gray-100">
@@ -328,18 +314,14 @@ export default function MatchTracker() {
               return (
                 <div key={m.id} className="px-5 py-3 flex items-center gap-3">
                   <div className="flex-1 flex items-center justify-end gap-2">
-                    {homeColors && (
-                      <span className={`w-3 h-3 rounded-full ${homeColors.bg}`} />
-                    )}
+                    {homeColors && <span className={`w-3 h-3 rounded-full ${homeColors.bg}`} />}
                     <span className="font-semibold text-gray-700 text-sm">{home?.name}</span>
                   </div>
                   <div className="font-black text-lg text-ir-dark w-16 text-center">
                     {m.homeScore} – {m.awayScore}
                   </div>
                   <div className="flex-1 flex items-center gap-2">
-                    {awayColors && (
-                      <span className={`w-3 h-3 rounded-full ${awayColors.bg}`} />
-                    )}
+                    {awayColors && <span className={`w-3 h-3 rounded-full ${awayColors.bg}`} />}
                     <span className="font-semibold text-gray-700 text-sm">{away?.name}</span>
                   </div>
                 </div>
@@ -349,7 +331,6 @@ export default function MatchTracker() {
         </div>
       )}
 
-      {/* Empty state */}
       {!liveMatch && finishedMatches.length === 0 && availableTeams.length >= 2 && (
         <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
           <div className="text-5xl mb-3">⚽</div>

@@ -108,7 +108,7 @@ export default function Dashboard() {
             icon: '🧩',
             title: 'Gestionar Equipos',
             desc: state.teams.length > 0 ? `${state.teams.length} equipos generados` : 'Genera equipos equilibrados por edad',
-            color: 'bg-ir-green',
+            color: 'bg-ir-blue',
           },
           {
             to: '/partido',
@@ -155,7 +155,7 @@ export default function Dashboard() {
                   </span>
                   <span className="flex-1 font-medium text-gray-800">{scorer.name}</span>
                   {team && <span className="text-xs text-gray-500">{team.name}</span>}
-                  <span className="font-black text-ir-green">{scorer.goals} ⚽</span>
+                  <span className="font-black text-ir-blue">{scorer.goals} ⚽</span>
                 </div>
               );
             })}

@@ -24,11 +24,11 @@
 
 @layer utilities {
   .ir-gradient {
-    background: linear-gradient(135deg, #005C2F 0%, #00A651 60%, #00C96A 100%);
+    background: linear-gradient(135deg, #002D5F 0%, #004B9A 60%, #0063CC 100%);
   }
 
   .ir-gradient-card {
-    background: linear-gradient(135deg, #005C2F 0%, #007A3D 100%);
+    background: linear-gradient(135deg, #002D5F 0%, #003D7F 100%);
   }
 
   .score-display {
@@ -42,5 +42,5 @@
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #00A651; border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: #005C2F; }
+::-webkit-scrollbar-thumb { background: #004B9A; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #002D5F; }
