@@ -1,5 +1,183 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useTournament } from '../../hooks/useTournament';
+
+interface CsvRow { name: string; age: number }
+
+function parseCSV(text: string): { rows: CsvRow[]; errors: string[] } {
+  const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
+  const rows: CsvRow[] = [];
+  const errors: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const raw = lines[i].trim();
+    // Skip header line if it contains "nombre" or "name"
+    if (i === 0 && /nombre|name|jugador|player/i.test(raw)) continue;
+
+    // Support comma or semicolon separator
+    const sep = raw.includes(';') ? ';' : ',';
+    const parts = raw.split(sep).map(p => p.trim().replace(/^["']|["']$/g, ''));
+
+    if (parts.length < 2) {
+      errors.push(`Línea ${i + 1}: formato incorrecto — "${raw}"`);
+      continue;
+    }
+
+    const name = parts[0];
+    const age = parseInt(parts[1]);
+
+    if (!name) { errors.push(`Línea ${i + 1}: nombre vacío`); continue; }
+    if (isNaN(age) || age < 5 || age > 80) { errors.push(`Línea ${i + 1}: edad inválida ("${parts[1]}")`); continue; }
+
+    rows.push({ name, age });
+  }
+
+  return { rows, errors };
+}
+
+function CsvImport({ onImport }: { onImport: (rows: CsvRow[]) => { imported: number; skipped: number } }) {
+  const [open, setOpen] = useState(false);
+  const [text, setText] = useState('');
+  const [preview, setPreview] = useState<CsvRow[]>([]);
+  const [parseErrors, setParseErrors] = useState<string[]>([]);
+  const [result, setResult] = useState<{ imported: number; skipped: number } | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  function handleText(value: string) {
+    setText(value);
+    setResult(null);
+    if (value.trim()) {
+      const { rows, errors } = parseCSV(value);
+      setPreview(rows);
+      setParseErrors(errors);
+    } else {
+      setPreview([]);
+      setParseErrors([]);
+    }
+  }
+
+  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => handleText(ev.target?.result as string ?? '');
+    reader.readAsText(file, 'UTF-8');
+  }
+
+  function handleImport() {
+    const res = onImport(preview);
+    setResult(res);
+    setPreview([]);
+    setParseErrors([]);
+    setText('');
+    if (fileRef.current) fileRef.current.value = '';
+  }
+
+  function handleClose() {
+    setOpen(false);
+    setText('');
+    setPreview([]);
+    setParseErrors([]);
+    setResult(null);
+    if (fileRef.current) fileRef.current.value = '';
+  }
+
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <button
+        onClick={() => setOpen(v => !v)}
+        className="w-full flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <span className="w-9 h-9 bg-ir-light rounded-xl flex items-center justify-center text-lg">📂</span>
+          <div className="text-left">
+            <p className="font-bold text-gray-800 text-sm">Importar desde CSV</p>
+            <p className="text-xs text-gray-400">Sube un archivo o pega el contenido</p>
+          </div>
+        </div>
+        <svg className={`w-4 h-4 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="border-t border-gray-100 p-6 space-y-4">
+          <div className="bg-ir-light rounded-xl p-3 text-xs text-ir-dark font-mono">
+            <p className="font-bold mb-1 font-sans">Formato esperado (nombre,edad):</p>
+            <p>nombre,edad</p>
+            <p>Juan García,25</p>
+            <p>María López,30</p>
+            <p className="font-sans text-ir-dark/70 mt-1">También acepta punto y coma ( ; ) como separador.</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Subir archivo .csv</label>
+            <input
+              ref={fileRef}
+              type="file"
+              accept=".csv,text/csv,text/plain"
+              onChange={handleFile}
+              className="block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-ir-blue file:text-white hover:file:bg-ir-dark cursor-pointer"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">O pega el contenido aquí</label>
+            <textarea
+              value={text}
+              onChange={e => handleText(e.target.value)}
+              placeholder={'nombre,edad\nJuan García,25\nMaría López,30'}
+              rows={5}
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-ir-blue resize-none"
+            />
+          </div>
+
+          {parseErrors.length > 0 && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-3 space-y-1">
+              <p className="text-xs font-bold text-red-600">⚠️ Líneas con error (se omitirán):</p>
+              {parseErrors.map((e, i) => <p key={i} className="text-xs text-red-500">{e}</p>)}
+            </div>
+          )}
+
+          {preview.length > 0 && (
+            <div className="border border-gray-200 rounded-xl overflow-hidden">
+              <div className="bg-gray-50 px-4 py-2">
+                <span className="text-xs font-bold text-gray-600">Vista previa — {preview.length} jugadores</span>
+              </div>
+              <div className="max-h-48 overflow-y-auto divide-y divide-gray-50">
+                {preview.map((row, i) => (
+                  <div key={i} className="flex items-center justify-between px-4 py-2 text-sm">
+                    <span className="font-medium text-gray-800">{row.name}</span>
+                    <span className="text-gray-400 text-xs bg-gray-100 px-2 py-0.5 rounded-full">{row.age} años</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {result && (
+            <div className="bg-green-50 border border-green-200 rounded-xl p-3 text-sm text-green-800">
+              ✅ <strong>{result.imported}</strong> jugadores importados
+              {result.skipped > 0 && <span className="text-gray-500"> · {result.skipped} omitidos (nombre duplicado)</span>}
+            </div>
+          )}
+
+          <div className="flex gap-3">
+            <button
+              onClick={handleImport}
+              disabled={preview.length === 0}
+              className="bg-ir-blue text-white font-bold px-5 py-2.5 rounded-xl hover:bg-ir-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm flex items-center gap-2"
+            >
+              ⬆ Importar {preview.length > 0 ? `${preview.length} jugadores` : ''}
+            </button>
+            <button onClick={handleClose} className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 text-sm hover:bg-gray-50">
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Players() {
   const { state, actions } = useTournament();
@@ -23,6 +201,18 @@ export default function Players() {
     actions.addPlayer(trimmed, ageNum);
     setName('');
     setAge('');
+  }
+
+  function handleCSVImport(rows: CsvRow[]) {
+    let imported = 0;
+    let skipped = 0;
+    for (const row of rows) {
+      const exists = state.players.some(p => p.name.toLowerCase() === row.name.toLowerCase());
+      if (exists) { skipped++; continue; }
+      actions.addPlayer(row.name, row.age);
+      imported++;
+    }
+    return { imported, skipped };
   }
 
   const filtered = state.players.filter(p =>
@@ -72,6 +262,8 @@ export default function Players() {
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
       </div>
 
+      <CsvImport onImport={handleCSVImport} />
+
       {state.players.length > 0 && (
         <div className="grid grid-cols-3 gap-3">
           {[
@@ -102,7 +294,7 @@ export default function Players() {
         <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
           <div className="text-5xl mb-3">👤</div>
           <h3 className="font-bold text-gray-700 text-lg">Sin jugadores aún</h3>
-          <p className="text-gray-400 text-sm mt-1">Añade jugadores usando el formulario de arriba</p>
+          <p className="text-gray-400 text-sm mt-1">Añade jugadores manualmente o importa un CSV</p>
         </div>
       ) : (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
