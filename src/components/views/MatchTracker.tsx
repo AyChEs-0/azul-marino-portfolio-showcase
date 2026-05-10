@@ -94,14 +94,10 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
     <>
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="ir-gradient px-5 py-2 flex items-center justify-between">
-          {match.status === 'live' ? (
-            <span className="flex items-center gap-1.5 text-white text-sm font-bold">
-              <span className="w-2 h-2 bg-red-400 rounded-full animate-pulse" />
-              EN VIVO
-            </span>
-          ) : (
-            <span className="text-white/70 text-sm font-medium">FINALIZADO</span>
-          )}
+          <span className="flex items-center gap-1.5 text-white text-sm font-bold">
+            <span className="w-2 h-2 bg-red-400 rounded-full animate-pulse" />
+            EN VIVO
+          </span>
           <span className="text-white/60 text-xs">
             {new Date(match.createdAt).toLocaleDateString('es-ES')}
           </span>
@@ -130,40 +126,38 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
             </div>
           </div>
 
-          {match.status === 'live' && (
-            <div className="grid grid-cols-2 gap-3 mt-6">
-              <div className="flex flex-col gap-2">
-                <button
-                  onClick={() => setGoalModal('home')}
-                  className={`${homeColors.bg} text-white font-bold py-3 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-sm`}
-                >
-                  ⚽ Gol {home.name}
-                </button>
-                <button
-                  onClick={() => actions.removeGoal(match.id, match.homeTeamId)}
-                  disabled={match.homeScore === 0}
-                  className="border border-gray-200 text-gray-500 py-2 rounded-xl hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed text-sm transition-colors"
-                >
-                  ↩ Deshacer gol
-                </button>
-              </div>
-              <div className="flex flex-col gap-2">
-                <button
-                  onClick={() => setGoalModal('away')}
-                  className={`${awayColors.bg} text-white font-bold py-3 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-sm`}
-                >
-                  ⚽ Gol {away.name}
-                </button>
-                <button
-                  onClick={() => actions.removeGoal(match.id, match.awayTeamId)}
-                  disabled={match.awayScore === 0}
-                  className="border border-gray-200 text-gray-500 py-2 rounded-xl hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed text-sm transition-colors"
-                >
-                  ↩ Deshacer gol
-                </button>
-              </div>
+          <div className="grid grid-cols-2 gap-3 mt-6">
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => setGoalModal('home')}
+                className={`${homeColors.bg} text-white font-bold py-3 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-sm`}
+              >
+                ⚽ Gol {home.name}
+              </button>
+              <button
+                onClick={() => actions.removeGoal(match.id, match.homeTeamId)}
+                disabled={match.homeScore === 0}
+                className="border border-gray-200 text-gray-500 py-2 rounded-xl hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed text-sm transition-colors"
+              >
+                ↩ Deshacer gol
+              </button>
             </div>
-          )}
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => setGoalModal('away')}
+                className={`${awayColors.bg} text-white font-bold py-3 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-sm`}
+              >
+                ⚽ Gol {away.name}
+              </button>
+              <button
+                onClick={() => actions.removeGoal(match.id, match.awayTeamId)}
+                disabled={match.awayScore === 0}
+                className="border border-gray-200 text-gray-500 py-2 rounded-xl hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed text-sm transition-colors"
+              >
+                ↩ Deshacer gol
+              </button>
+            </div>
+          </div>
 
           {match.goals.length > 0 && (
             <div className="mt-5 pt-4 border-t border-gray-100">
@@ -189,14 +183,12 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
             </div>
           )}
 
-          {match.status === 'live' && (
-            <button
-              onClick={onFinish}
-              className="w-full mt-5 bg-ir-dark text-white font-bold py-3 rounded-xl hover:bg-black transition-colors"
-            >
-              🏁 Finalizar Partido
-            </button>
-          )}
+          <button
+            onClick={onFinish}
+            className="w-full mt-5 bg-ir-dark text-white font-bold py-3 rounded-xl hover:bg-black transition-colors"
+          >
+            🏁 Finalizar Partido
+          </button>
         </div>
       </div>
 
@@ -214,28 +206,28 @@ function MatchCard({ match, onFinish }: { match: Match; onFinish: () => void }) 
 
 export default function MatchTracker() {
   const { state, actions } = useTournament();
-  const [homeId, setHomeId] = useState('');
-  const [awayId, setAwayId] = useState('');
-  const [formError, setFormError] = useState('');
+  const [confirmFixtures, setConfirmFixtures] = useState(false);
 
   const liveMatch = state.matches.find(m => m.status === 'live');
+  const scheduledMatches = state.matches.filter(m => m.status === 'scheduled');
   const finishedMatches = [...state.matches.filter(m => m.status === 'finished')].reverse();
 
-  function handleCreate(e: React.FormEvent) {
-    e.preventDefault();
-    setFormError('');
-    if (!homeId || !awayId) return setFormError('Selecciona ambos equipos.');
-    if (homeId === awayId) return setFormError('Los equipos deben ser distintos.');
-    actions.createMatch(homeId, awayId);
-    setHomeId('');
-    setAwayId('');
-  }
+  const hasFixtures = state.matches.length > 0;
+  const allDone = hasFixtures && scheduledMatches.length === 0 && !liveMatch;
+
+  const progress = hasFixtures
+    ? Math.round((finishedMatches.length / state.matches.length) * 100)
+    : 0;
 
   function handleFinish(matchId: string) {
     if (confirm('¿Dar por finalizado este partido?')) actions.finishMatch(matchId);
   }
 
-  const availableTeams = state.teams;
+  function handleGenerateFixtures() {
+    if (hasFixtures && !confirmFixtures) { setConfirmFixtures(true); return; }
+    actions.generateFixtures();
+    setConfirmFixtures(false);
+  }
 
   return (
     <div className="animate-fade-in space-y-6">
@@ -244,53 +236,77 @@ export default function MatchTracker() {
         <p className="text-gray-500 text-sm mt-1">Gestiona el marcador en tiempo real e introduce los goleadores.</p>
       </div>
 
-      {!liveMatch && (
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h2 className="font-bold text-gray-800 mb-4">Nuevo Partido</h2>
-          {availableTeams.length < 2 ? (
-            <p className="text-gray-500 text-sm">Necesitas al menos 2 equipos. Ve a la sección <strong>Equipos</strong> para generarlos.</p>
-          ) : (
-            <form onSubmit={handleCreate} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Equipo Local</label>
-                  <select
-                    value={homeId}
-                    onChange={e => setHomeId(e.target.value)}
-                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-blue bg-white"
+      {/* League calendar controls */}
+      {state.teams.length >= 2 && (
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div>
+              <p className="font-bold text-gray-800">Calendario Liga</p>
+              <p className="text-sm text-gray-500 mt-0.5">
+                {hasFixtures
+                  ? `${finishedMatches.length} de ${state.matches.length} partidos jugados`
+                  : `${state.teams.length} equipos · ${(state.teams.length * (state.teams.length - 1)) / 2} partidos en total`}
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-2">
+              {confirmFixtures && (
+                <p className="text-sm text-amber-600 font-medium">¿Regenerar y borrar todos los partidos?</p>
+              )}
+              <div className="flex gap-2 flex-wrap justify-end">
+                {confirmFixtures && (
+                  <button
+                    onClick={() => setConfirmFixtures(false)}
+                    className="px-4 py-2 rounded-xl border border-gray-300 text-gray-600 text-sm font-medium hover:bg-gray-50"
                   >
-                    <option value="">Seleccionar equipo...</option>
-                    {availableTeams.map(t => (
-                      <option key={t.id} value={t.id} disabled={t.id === awayId}>{t.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Equipo Visitante</label>
-                  <select
-                    value={awayId}
-                    onChange={e => setAwayId(e.target.value)}
-                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ir-blue bg-white"
-                  >
-                    <option value="">Seleccionar equipo...</option>
-                    {availableTeams.map(t => (
-                      <option key={t.id} value={t.id} disabled={t.id === homeId}>{t.name}</option>
-                    ))}
-                  </select>
-                </div>
+                    Cancelar
+                  </button>
+                )}
+                <button
+                  onClick={handleGenerateFixtures}
+                  className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${
+                    confirmFixtures
+                      ? 'bg-amber-500 text-white hover:bg-amber-600'
+                      : 'bg-ir-blue text-white hover:bg-ir-dark'
+                  }`}
+                >
+                  <span>📅</span>
+                  {hasFixtures ? (confirmFixtures ? 'Sí, regenerar' : 'Regenerar calendario') : 'Generar calendario'}
+                </button>
               </div>
-              {formError && <p className="text-red-500 text-sm">{formError}</p>}
-              <button
-                type="submit"
-                className="bg-ir-blue text-white font-bold px-6 py-2.5 rounded-xl hover:bg-ir-dark transition-colors flex items-center gap-2"
-              >
-                <span>▶</span> Iniciar Partido
-              </button>
-            </form>
+            </div>
+          </div>
+          {hasFixtures && (
+            <div className="mt-4">
+              <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+                <span>Progreso de la liga</span>
+                <span>{progress}%</span>
+              </div>
+              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-ir-blue rounded-full transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              {allDone && (
+                <p className="text-sm font-bold text-green-600 mt-2 flex items-center gap-1.5">
+                  🏆 ¡Liga completada! Revisa la clasificación final.
+                </p>
+              )}
+            </div>
           )}
         </div>
       )}
 
+      {/* No teams */}
+      {state.teams.length < 2 && (
+        <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
+          <div className="text-5xl mb-3">🧩</div>
+          <h3 className="font-bold text-gray-700 text-lg">Sin equipos</h3>
+          <p className="text-gray-400 text-sm mt-1">Ve a <strong>Equipos</strong> para generar al menos 2 equipos.</p>
+        </div>
+      )}
+
+      {/* Live match */}
       {liveMatch && (
         <div className="space-y-2">
           <p className="text-sm font-bold text-red-500 flex items-center gap-1.5">
@@ -300,13 +316,17 @@ export default function MatchTracker() {
         </div>
       )}
 
-      {finishedMatches.length > 0 && (
+      {/* Scheduled fixtures */}
+      {scheduledMatches.length > 0 && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="px-5 py-3 border-b border-gray-100">
-            <h2 className="font-bold text-gray-800">Partidos Finalizados</h2>
+          <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="font-bold text-gray-800">Pendientes ({scheduledMatches.length})</h2>
+            {liveMatch && (
+              <span className="text-xs text-gray-400">Finaliza el partido en curso primero</span>
+            )}
           </div>
           <div className="divide-y divide-gray-50">
-            {finishedMatches.map(m => {
+            {scheduledMatches.map(m => {
               const home = state.teams.find(t => t.id === m.homeTeamId);
               const away = state.teams.find(t => t.id === m.awayTeamId);
               const homeColors = home ? COLOR_STYLES[home.color] : null;
@@ -317,12 +337,51 @@ export default function MatchTracker() {
                     {homeColors && <span className={`w-3 h-3 rounded-full ${homeColors.bg}`} />}
                     <span className="font-semibold text-gray-700 text-sm">{home?.name}</span>
                   </div>
-                  <div className="font-black text-lg text-ir-dark w-16 text-center">
+                  <div className="text-gray-300 font-black text-sm w-8 text-center">vs</div>
+                  <div className="flex-1 flex items-center gap-2">
+                    {awayColors && <span className={`w-3 h-3 rounded-full ${awayColors.bg}`} />}
+                    <span className="font-semibold text-gray-700 text-sm">{away?.name}</span>
+                  </div>
+                  <button
+                    onClick={() => !liveMatch && actions.startMatch(m.id)}
+                    disabled={!!liveMatch}
+                    className="px-3 py-1.5 rounded-lg bg-ir-blue text-white text-xs font-bold hover:bg-ir-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"
+                  >
+                    ▶ Iniciar
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Finished matches */}
+      {finishedMatches.length > 0 && (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="px-5 py-3 border-b border-gray-100">
+            <h2 className="font-bold text-gray-800">Resultados ({finishedMatches.length})</h2>
+          </div>
+          <div className="divide-y divide-gray-50">
+            {finishedMatches.map(m => {
+              const home = state.teams.find(t => t.id === m.homeTeamId);
+              const away = state.teams.find(t => t.id === m.awayTeamId);
+              const homeColors = home ? COLOR_STYLES[home.color] : null;
+              const awayColors = away ? COLOR_STYLES[away.color] : null;
+              const homeWon = m.homeScore > m.awayScore;
+              const awayWon = m.awayScore > m.homeScore;
+              return (
+                <div key={m.id} className="px-5 py-3 flex items-center gap-3">
+                  <div className="flex-1 flex items-center justify-end gap-2">
+                    {homeColors && <span className={`w-3 h-3 rounded-full ${homeColors.bg}`} />}
+                    <span className={`font-semibold text-sm ${homeWon ? 'text-ir-dark' : 'text-gray-400'}`}>{home?.name}</span>
+                  </div>
+                  <div className="font-black text-base w-16 text-center text-ir-dark">
                     {m.homeScore} – {m.awayScore}
                   </div>
                   <div className="flex-1 flex items-center gap-2">
                     {awayColors && <span className={`w-3 h-3 rounded-full ${awayColors.bg}`} />}
-                    <span className="font-semibold text-gray-700 text-sm">{away?.name}</span>
+                    <span className={`font-semibold text-sm ${awayWon ? 'text-ir-dark' : 'text-gray-400'}`}>{away?.name}</span>
                   </div>
                 </div>
               );
@@ -331,11 +390,12 @@ export default function MatchTracker() {
         </div>
       )}
 
-      {!liveMatch && finishedMatches.length === 0 && availableTeams.length >= 2 && (
+      {/* Empty state */}
+      {state.teams.length >= 2 && !hasFixtures && (
         <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
-          <div className="text-5xl mb-3">⚽</div>
-          <h3 className="font-bold text-gray-700 text-lg">Sin partidos aún</h3>
-          <p className="text-gray-400 text-sm mt-1">Crea el primer partido usando el formulario de arriba</p>
+          <div className="text-5xl mb-3">📅</div>
+          <h3 className="font-bold text-gray-700 text-lg">Sin calendario generado</h3>
+          <p className="text-gray-400 text-sm mt-1">Pulsa "Generar calendario" para crear todos los partidos de la liga</p>
         </div>
       )}
     </div>

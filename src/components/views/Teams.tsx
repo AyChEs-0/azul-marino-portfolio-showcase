@@ -18,12 +18,14 @@ export { COLOR_STYLES };
 
 export default function Teams() {
   const { state, actions } = useTournament();
+  const [teamSize, setTeamSize] = useState(5);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [confirmRegen, setConfirmRegen] = useState(false);
   const [manualEdit, setManualEdit] = useState(false);
 
-  const canGenerate = state.players.length >= 10;
+  const numTeams = Math.floor(state.players.length / teamSize);
+  const canGenerate = numTeams >= 2;
   const hasTeams = state.teams.length > 0;
 
   function startEdit(id: string, name: string) {
@@ -38,7 +40,7 @@ export default function Teams() {
 
   function handleGenerate() {
     if (hasTeams && !confirmRegen) { setConfirmRegen(true); return; }
-    actions.generateTeams();
+    actions.generateTeams(teamSize);
     setConfirmRegen(false);
     setManualEdit(false);
   }
@@ -52,21 +54,37 @@ export default function Teams() {
         </p>
       </div>
 
+      {/* Controls bar */}
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
         <div className="flex items-center justify-between gap-4 flex-wrap">
-          <div>
-            <p className="font-semibold text-gray-800">
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <label className="text-sm font-semibold text-gray-700">Jugadores por equipo:</label>
+              <div className="flex gap-1.5">
+                {[3, 4, 5, 6, 7, 8].map(n => (
+                  <button
+                    key={n}
+                    onClick={() => { setTeamSize(n); setConfirmRegen(false); }}
+                    className={`w-9 h-9 rounded-xl text-sm font-bold transition-all ${
+                      teamSize === n
+                        ? 'bg-ir-blue text-white shadow'
+                        : 'bg-gray-100 text-gray-600 hover:bg-ir-light hover:text-ir-dark'
+                    }`}
+                  >
+                    {n}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <p className="text-sm text-gray-500">
               {canGenerate
-                ? `${state.players.length} jugadores · ${Math.floor(state.players.length / 5)} equipos de 5`
-                : `Necesitas al menos 10 jugadores (tienes ${state.players.length})`}
-            </p>
-            <p className="text-sm text-gray-500 mt-0.5">
-              Algoritmo de draft en serpiente por edad para máximo equilibrio
+                ? `${state.players.length} jugadores → ${numTeams} equipos de ${teamSize}`
+                : `Necesitas al menos ${teamSize * 2} jugadores para ${teamSize}vs${teamSize} (tienes ${state.players.length})`}
             </p>
           </div>
           <div className="flex flex-col items-end gap-2">
             {confirmRegen && (
-              <p className="text-sm text-amber-600 font-medium">¿Regener ar y perder los equipos actuales?</p>
+              <p className="text-sm text-amber-600 font-medium">¿Regenerar y perder los equipos actuales?</p>
             )}
             <div className="flex gap-2 flex-wrap justify-end">
               {confirmRegen && (
@@ -121,7 +139,7 @@ export default function Teams() {
           <div className="text-5xl mb-3">🧩</div>
           <h3 className="font-bold text-gray-700 text-lg">Sin equipos generados</h3>
           <p className="text-gray-400 text-sm mt-1">
-            {canGenerate ? 'Pulsa "Generar Equipos" para crear los equipos' : 'Primero registra al menos 10 jugadores'}
+            {canGenerate ? 'Pulsa "Generar Equipos" para crear los equipos' : `Primero registra al menos ${teamSize * 2} jugadores`}
           </p>
         </div>
       ) : (
@@ -135,6 +153,7 @@ export default function Teams() {
 
             return (
               <div key={team.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover">
+                {/* Team header */}
                 <div className={`${colors.bg} p-4 text-white`}>
                   <div className="flex items-center justify-between gap-2">
                     {isRenamingThis ? (
@@ -169,6 +188,7 @@ export default function Teams() {
                   </p>
                 </div>
 
+                {/* Players list */}
                 <div className="divide-y divide-gray-50">
                   {players
                     .sort((a, b) => b.age - a.age)

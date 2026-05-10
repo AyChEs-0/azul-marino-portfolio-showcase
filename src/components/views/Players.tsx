@@ -229,7 +229,7 @@ export default function Players() {
       <div>
         <h1 className="text-2xl font-black text-ir-dark">👥 Jugadores</h1>
         <p className="text-gray-500 text-sm mt-1">
-          Registra los participantes del torneo. Necesitas al menos 10 para generar 2 equipos.
+          Registra los participantes del torneo. Elige el tamaño de equipo en la sección Equipos.
         </p>
       </div>
 
@@ -340,9 +340,9 @@ export default function Players() {
         </div>
       )}
 
-      {state.players.length < 10 && state.players.length > 0 && (
+      {state.players.length > 0 && state.players.length < 6 && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
-          <strong>💡 Tip:</strong> Necesitas {10 - state.players.length} jugador{10 - state.players.length !== 1 ? 'es' : ''} más para poder generar equipos de 5 vs 5.
+          <strong>💡 Tip:</strong> Añade al menos {6 - state.players.length} jugador{6 - state.players.length !== 1 ? 'es' : ''} más para poder generar equipos.
         </div>
       )}
     </div>

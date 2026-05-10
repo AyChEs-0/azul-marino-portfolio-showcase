@@ -53,16 +53,20 @@ export function useTournament() {
     [update],
   );
 
-  const generateTeams = useCallback(() => {
-    const teams = generateBalancedTeams(state.players, 5);
-    const playerTeamMap = new Map<string, string>();
-    teams.forEach(team => team.playerIds.forEach(pid => playerTeamMap.set(pid, team.id)));
-    update(prev => ({
-      ...prev,
-      teams,
-      players: prev.players.map(p => ({ ...p, teamId: playerTeamMap.get(p.id) })),
-    }));
-  }, [state.players, update]);
+  const generateTeams = useCallback(
+    (teamSize: number = 5) => {
+      const teams = generateBalancedTeams(state.players, teamSize);
+      const playerTeamMap = new Map<string, string>();
+      teams.forEach(team => team.playerIds.forEach(pid => playerTeamMap.set(pid, team.id)));
+      update(prev => ({
+        ...prev,
+        teams,
+        players: prev.players.map(p => ({ ...p, teamId: playerTeamMap.get(p.id) })),
+        matches: [],
+      }));
+    },
+    [state.players, update],
+  );
 
   const renameTeam = useCallback(
     (teamId: string, name: string) => {
@@ -85,6 +89,40 @@ export function useTournament() {
             : t.playerIds.filter(id => id !== playerId),
         })),
         players: prev.players.map(p => p.id === playerId ? { ...p, teamId: toTeamId } : p),
+      }));
+    },
+    [update],
+  );
+
+  const generateFixtures = useCallback(() => {
+    update(prev => {
+      const teams = prev.teams;
+      const fixtures: Match[] = [];
+      for (let i = 0; i < teams.length; i++) {
+        for (let j = i + 1; j < teams.length; j++) {
+          fixtures.push({
+            id: `m-${Date.now()}-${i}-${j}`,
+            homeTeamId: teams[i].id,
+            awayTeamId: teams[j].id,
+            homeScore: 0,
+            awayScore: 0,
+            status: 'scheduled',
+            goals: [],
+            createdAt: new Date().toISOString(),
+          });
+        }
+      }
+      return { ...prev, matches: fixtures };
+    });
+  }, [update]);
+
+  const startMatch = useCallback(
+    (matchId: string) => {
+      update(prev => ({
+        ...prev,
+        matches: prev.matches.map(m =>
+          m.id === matchId ? { ...m, status: 'live' } : m,
+        ),
       }));
     },
     [update],
@@ -221,6 +259,8 @@ export function useTournament() {
       generateTeams,
       renameTeam,
       movePlayer,
+      generateFixtures,
+      startMatch,
       createMatch,
       addGoal,
       removeGoal,
