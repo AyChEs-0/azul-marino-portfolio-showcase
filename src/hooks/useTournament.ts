@@ -74,6 +74,22 @@ export function useTournament() {
     [update],
   );
 
+  const movePlayer = useCallback(
+    (playerId: string, toTeamId: string) => {
+      update(prev => ({
+        ...prev,
+        teams: prev.teams.map(t => ({
+          ...t,
+          playerIds: t.id === toTeamId
+            ? t.playerIds.includes(playerId) ? t.playerIds : [...t.playerIds, playerId]
+            : t.playerIds.filter(id => id !== playerId),
+        })),
+        players: prev.players.map(p => p.id === playerId ? { ...p, teamId: toTeamId } : p),
+      }));
+    },
+    [update],
+  );
+
   const createMatch = useCallback(
     (homeTeamId: string, awayTeamId: string): string => {
       const match: Match = {
@@ -163,7 +179,6 @@ export function useTournament() {
     setState(initialState);
   }, []);
 
-  // Computed standings
   const standings: StandingRow[] = state.teams
     .map(team => {
       const played = state.matches.filter(
@@ -183,7 +198,6 @@ export function useTournament() {
     })
     .sort((a, b) => b.points - a.points || b.gd - a.gd || b.gf - a.gf);
 
-  // Computed top scorers
   const topScorers: TopScorer[] = (() => {
     const map = new Map<string, TopScorer>();
     state.matches.forEach(m =>
@@ -206,6 +220,7 @@ export function useTournament() {
       removePlayer,
       generateTeams,
       renameTeam,
+      movePlayer,
       createMatch,
       addGoal,
       removeGoal,

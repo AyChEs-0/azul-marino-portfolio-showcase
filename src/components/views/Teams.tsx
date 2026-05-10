@@ -21,6 +21,7 @@ export default function Teams() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [confirmRegen, setConfirmRegen] = useState(false);
+  const [manualEdit, setManualEdit] = useState(false);
 
   const canGenerate = state.players.length >= 10;
   const hasTeams = state.teams.length > 0;
@@ -36,12 +37,10 @@ export default function Teams() {
   }
 
   function handleGenerate() {
-    if (hasTeams && !confirmRegen) {
-      setConfirmRegen(true);
-      return;
-    }
+    if (hasTeams && !confirmRegen) { setConfirmRegen(true); return; }
     actions.generateTeams();
     setConfirmRegen(false);
+    setManualEdit(false);
   }
 
   return (
@@ -69,7 +68,7 @@ export default function Teams() {
             {confirmRegen && (
               <p className="text-sm text-amber-600 font-medium">¿Regener ar y perder los equipos actuales?</p>
             )}
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap justify-end">
               {confirmRegen && (
                 <button
                   onClick={() => setConfirmRegen(false)}
@@ -81,7 +80,7 @@ export default function Teams() {
               <button
                 onClick={handleGenerate}
                 disabled={!canGenerate}
-                className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${
+                className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${
                   canGenerate
                     ? confirmRegen
                       ? 'bg-amber-500 text-white hover:bg-amber-600'
@@ -90,21 +89,39 @@ export default function Teams() {
                 }`}
               >
                 <span>🎲</span>
-                {hasTeams ? (confirmRegen ? 'Sí, regenerar' : 'Regenerar Equipos') : 'Generar Equipos'}
+                {hasTeams ? (confirmRegen ? 'Sí, regenerar' : 'Regenerar') : 'Generar Equipos'}
               </button>
+              {hasTeams && (
+                <button
+                  onClick={() => setManualEdit(v => !v)}
+                  className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${
+                    manualEdit
+                      ? 'bg-ir-dark text-white'
+                      : 'border-2 border-ir-dark text-ir-dark hover:bg-ir-light'
+                  }`}
+                >
+                  <span>{manualEdit ? '✓' : '✏️'}</span>
+                  {manualEdit ? 'Guardar cambios' : 'Editar manualmente'}
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
+
+      {manualEdit && (
+        <div className="bg-amber-50 border border-amber-300 rounded-xl px-4 py-3 flex items-center gap-2 text-sm text-amber-800">
+          <span>✏️</span>
+          <span><strong>Modo edición activo</strong> — usa el desplegable junto a cada jugador para moverlo a otro equipo.</span>
+        </div>
+      )}
 
       {!hasTeams ? (
         <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
           <div className="text-5xl mb-3">🧩</div>
           <h3 className="font-bold text-gray-700 text-lg">Sin equipos generados</h3>
           <p className="text-gray-400 text-sm mt-1">
-            {canGenerate
-              ? 'Pulsa "Generar Equipos" para crear los equipos'
-              : 'Primero registra al menos 10 jugadores'}
+            {canGenerate ? 'Pulsa "Generar Equipos" para crear los equipos' : 'Primero registra al menos 10 jugadores'}
           </p>
         </div>
       ) : (
@@ -113,13 +130,14 @@ export default function Teams() {
             const colors = COLOR_STYLES[team.color];
             const players = state.players.filter(p => team.playerIds.includes(p.id));
             const avgAge = getTeamAverageAge(team, state.players);
-            const isEditing = editingId === team.id;
+            const isRenamingThis = editingId === team.id;
+            const otherTeams = state.teams.filter(t => t.id !== team.id);
 
             return (
               <div key={team.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover">
                 <div className={`${colors.bg} p-4 text-white`}>
                   <div className="flex items-center justify-between gap-2">
-                    {isEditing ? (
+                    {isRenamingThis ? (
                       <div className="flex items-center gap-2 flex-1">
                         <input
                           className="bg-white/20 text-white placeholder-white/60 border border-white/40 rounded-lg px-3 py-1 text-base font-bold flex-1 focus:outline-none focus:ring-2 focus:ring-white/50"
@@ -155,14 +173,32 @@ export default function Teams() {
                   {players
                     .sort((a, b) => b.age - a.age)
                     .map((player, idx) => (
-                      <div key={player.id} className="flex items-center gap-3 px-4 py-2.5">
+                      <div key={player.id} className={`flex items-center gap-3 px-4 py-2.5 ${manualEdit ? 'bg-amber-50/40' : ''}`}>
                         <span className={`w-6 h-6 rounded-full ${colors.light} ${colors.text} text-xs font-black flex items-center justify-center flex-shrink-0`}>
                           {idx + 1}
                         </span>
-                        <span className="flex-1 font-medium text-gray-800 text-sm">{player.name}</span>
-                        <span className="text-xs font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+                        <span className="flex-1 font-medium text-gray-800 text-sm truncate">{player.name}</span>
+                        <span className="text-xs font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full flex-shrink-0">
                           {player.age}a
                         </span>
+                        {manualEdit && otherTeams.length > 0 && (
+                          <select
+                            defaultValue=""
+                            onChange={e => {
+                              if (e.target.value) {
+                                actions.movePlayer(player.id, e.target.value);
+                                e.target.value = '';
+                              }
+                            }}
+                            className="text-xs border border-amber-300 rounded-lg px-2 py-1 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer"
+                            title="Mover a equipo"
+                          >
+                            <option value="" disabled>Mover →</option>
+                            {otherTeams.map(t => (
+                              <option key={t.id} value={t.id}>{t.name}</option>
+                            ))}
+                          </select>
+                        )}
                       </div>
                     ))}
                   {players.length === 0 && (
