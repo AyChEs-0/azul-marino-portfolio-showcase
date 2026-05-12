@@ -22,7 +22,12 @@ export default function MajlisGameOverScreen() {
   const { isRTL } = useLanguage();
   const params = useLocalSearchParams<{ players: string }>();
 
-  const players: Player[] = params.players ? JSON.parse(params.players) : [];
+  let players: Player[] = [];
+  try {
+    if (params.players) players = JSON.parse(params.players) as Player[];
+  } catch {
+    // malformed deep-link param — fall through with empty array
+  }
   const rankings = getMajlisRankings(players);
 
   const medalEmoji = ["🥇", "🥈", "🥉"];

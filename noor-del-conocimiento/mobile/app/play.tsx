@@ -56,8 +56,20 @@ export default function PlayScreen() {
     difficulty: string;
   }>();
 
-  const difficulty = (params.difficulty ?? "easy") as Difficulty;
-  const category = (params.category ?? "mix") as GameMode;
+  // Validate against allowlists — prevents manipulated deep links from
+  // bypassing game logic with invalid difficulty/category values.
+  const VALID_DIFFICULTIES: Difficulty[] = ["easy", "medium", "hard"];
+  const VALID_CATEGORIES: GameMode[] = [
+    "mix", "Seerah", "Profetas", "Corán y General",
+  ];
+  const rawDiff = params.difficulty ?? "easy";
+  const rawCat = params.category ?? "mix";
+  const difficulty: Difficulty = VALID_DIFFICULTIES.includes(rawDiff as Difficulty)
+    ? (rawDiff as Difficulty)
+    : "easy";
+  const category: GameMode = VALID_CATEGORIES.includes(rawCat as GameMode)
+    ? (rawCat as GameMode)
+    : "mix";
 
   const [gameQuestions, setGameQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);

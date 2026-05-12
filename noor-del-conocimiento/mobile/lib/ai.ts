@@ -1,6 +1,10 @@
-// Claude API integration — reemplaza Genkit/Gemini
-// En desarrollo usa EXPO_PUBLIC_ANTHROPIC_API_KEY directamente.
-// En producción el proxy server en /api/feedback guarda la clave fuera del bundle.
+// Claude API integration — servidor proxy en producción, cliente en dev.
+//
+// SEGURIDAD:
+//   - En producción nativa (APK/IPA): EXPO_PUBLIC_ANTHROPIC_API_KEY NO debe estar
+//     configurada. Todo el tráfico debe pasar por el proxy /api/feedback.
+//   - En Expo Go / desarrollo: se acepta la clave pública para iterar rápido.
+//   - La clave ANTHROPIC_API_KEY (sin EXPO_PUBLIC_) solo existe en el servidor.
 import Anthropic from "@anthropic-ai/sdk";
 import type { Language } from "./types";
 
@@ -17,6 +21,37 @@ const LANGUAGE_NAMES: Record<Language, string> = {
   ma: "Moroccan Arabic (Darija)",
 };
 
+// ── Input sanitization (client side) ─────────────────────────────────────────
+// Defense-in-depth: also sanitized server-side, but sanitize before sending too.
+
+const INJECTION_PATTERNS = [
+  /ignore\s+previous\s+instructions?/gi,
+  /ignore\s+all\s+instructions?/gi,
+  /you\s+are\s+now\s+(a|an)\s+/gi,
+  /forget\s+(everything|all|previous)/gi,
+  /system\s+prompt/gi,
+];
+
+function sanitize(raw: string, maxLen: number): string {
+  let s = raw
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "")
+    .slice(0, maxLen)
+    .trim();
+  for (const p of INJECTION_PATTERNS) s = s.replace(p, "[redacted]");
+  return s;
+}
+
+function sanitizeInput(input: FeedbackInput): FeedbackInput {
+  return {
+    question: sanitize(input.question, 500),
+    correctAnswer: sanitize(input.correctAnswer, 200),
+    userAnswer: sanitize(input.userAnswer, 200),
+    language: input.language,
+  };
+}
+
+// ── Proxy path (web / Expo server rendering) ──────────────────────────────────
+
 async function fetchViaProxy(input: FeedbackInput): Promise<string> {
   const res = await fetch("/api/feedback", {
     method: "POST",
@@ -25,15 +60,21 @@ async function fetchViaProxy(input: FeedbackInput): Promise<string> {
   });
   if (!res.ok) return "";
   const data = (await res.json()) as { feedback?: string };
-  return data.feedback ?? "";
+  return typeof data.feedback === "string" ? data.feedback : "";
 }
 
+// ── Direct path (Expo Go / development only) ──────────────────────────────────
+
 async function fetchDirectly(input: FeedbackInput): Promise<string> {
+  // Only allowed in development. Production APKs/IPAs must NOT set this key.
+  if (!__DEV__) return "";
+
   const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
   if (!apiKey) return "";
 
   const client = new Anthropic({
     apiKey,
+    // Required for the SDK to work in React Native (not a real browser)
     dangerouslyAllowBrowser: true,
   });
 
@@ -68,16 +109,19 @@ Student's answer: ${input.userAnswer}`,
   return block.type === "text" ? block.text.trim() : "";
 }
 
+// ── Public API ────────────────────────────────────────────────────────────────
+
 export const getAIFeedback = async (input: FeedbackInput): Promise<string> => {
   try {
-    // In production (Expo server rendering), proxy keeps the key server-side.
-    // In native builds, fall back to direct client call with the public key.
-    if (typeof window !== "undefined" && window.location?.origin?.startsWith("http")) {
-      return await fetchViaProxy(input);
+    const safe = sanitizeInput(input);
+    if (
+      typeof window !== "undefined" &&
+      window.location?.origin?.startsWith("http")
+    ) {
+      return await fetchViaProxy(safe);
     }
-    return await fetchDirectly(input);
+    return await fetchDirectly(safe);
   } catch {
-    // AI feedback is non-critical — swallow errors silently
     return "";
   }
 };

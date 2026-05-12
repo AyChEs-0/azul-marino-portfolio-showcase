@@ -47,7 +47,13 @@ export default function MajlisSetupScreen() {
   };
 
   const handleStart = () => {
-    const names = playerNames.map((n, i) => n.trim() || `Jugador ${i + 1}`);
+    // Strip control characters and limit length — player names can appear
+    // in context when AI feedback is requested, so sanitize upfront.
+    const sanitizeName = (raw: string, fallback: string) =>
+      raw.replace(/[\x00-\x1F\x7F]/g, "").slice(0, 20).trim() || fallback;
+    const names = playerNames.map((n, i) =>
+      sanitizeName(n, `Jugador ${i + 1}`)
+    );
     const players = names.map((name, i) => createPlayer(`player_${i}`, name));
     router.push({
       pathname: "/play",

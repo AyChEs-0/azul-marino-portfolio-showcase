@@ -37,9 +37,11 @@ export default function GameOverScreen() {
     difficulty: string;
   }>();
 
-  const score = parseInt(params.score ?? "0", 10);
-  const correct = parseInt(params.correct ?? "0", 10);
-  const total = parseInt(params.total ?? "1", 10);
+  // Clamp all numeric params to valid ranges — prevents manipulated deep links
+  // from showing impossible scores or dividing by zero.
+  const score = Math.min(100, Math.max(0, parseInt(params.score ?? "0", 10) || 0));
+  const total = Math.max(1, parseInt(params.total ?? "1", 10) || 1);
+  const correct = Math.min(total, Math.max(0, parseInt(params.correct ?? "0", 10) || 0));
   const rank = getRank(score);
 
   // Staggered entrance animations

@@ -11,12 +11,16 @@ const KEYS = {
 
 const MAX_MEMORY_SIZE = 150;
 
+const ALLOWED_LANGUAGES: Language[] = ["es", "en", "ma"];
+
 // ── Idioma ─────────────────────────────────────────────────────────────────
 
 export const getStoredLanguage = async (): Promise<Language | null> => {
   try {
     const val = await AsyncStorage.getItem(KEYS.language);
-    if (val && ["es", "en", "ma"].includes(val)) return val as Language;
+    if (val && (ALLOWED_LANGUAGES as string[]).includes(val)) {
+      return val as Language;
+    }
     return null;
   } catch {
     return null;
@@ -31,10 +35,19 @@ export const setStoredLanguage = async (lang: Language): Promise<void> => {
 
 // ── Historial de preguntas jugadas (anti-repetición) ───────────────────────
 
+function isNumberArray(val: unknown): val is number[] {
+  return (
+    Array.isArray(val) &&
+    val.every((x) => typeof x === "number" && Number.isFinite(x))
+  );
+}
+
 export const getPlayedQuestions = async (): Promise<number[]> => {
   try {
     const data = await AsyncStorage.getItem(KEYS.playedQuestions);
-    return data ? (JSON.parse(data) as number[]) : [];
+    if (!data) return [];
+    const parsed: unknown = JSON.parse(data);
+    return isNumberArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
@@ -54,11 +67,27 @@ export const addPlayedQuestions = async (ids: number[]): Promise<void> => {
 
 // ── Estadísticas del jugador ───────────────────────────────────────────────
 
+function isValidStats(val: unknown): val is StoredStats {
+  if (typeof val !== "object" || val === null) return false;
+  const s = val as Record<string, unknown>;
+  return (
+    typeof s.bestScore === "number" &&
+    typeof s.gamesPlayed === "number" &&
+    typeof s.totalCorrect === "number" &&
+    typeof s.lastPlayedAt === "number" &&
+    Number.isFinite(s.bestScore) &&
+    Number.isFinite(s.gamesPlayed) &&
+    Number.isFinite(s.totalCorrect) &&
+    Number.isFinite(s.lastPlayedAt)
+  );
+}
+
 export const getStats = async (): Promise<StoredStats> => {
   try {
     const data = await AsyncStorage.getItem(KEYS.stats);
     if (!data) return defaultStats();
-    return JSON.parse(data) as StoredStats;
+    const parsed: unknown = JSON.parse(data);
+    return isValidStats(parsed) ? parsed : defaultStats();
   } catch {
     return defaultStats();
   }
