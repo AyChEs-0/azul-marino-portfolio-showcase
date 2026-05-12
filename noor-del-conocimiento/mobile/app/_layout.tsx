@@ -1,0 +1,59 @@
+import "../global.css";
+import "../lib/i18n";
+import React, { useEffect } from "react";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as SplashScreen from "expo-splash-screen";
+import { useFonts } from "expo-font";
+import {
+  Amiri_400Regular,
+  Amiri_700Bold,
+  Amiri_400Italic,
+  Amiri_700BoldItalic,
+} from "@expo-google-fonts/amiri";
+import { LanguageProvider } from "../context/LanguageContext";
+import { Colors } from "../constants/colors";
+
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [fontsLoaded, fontError] = useFonts({
+    Amiri_400Regular,
+    Amiri_700Bold,
+    Amiri_400Italic,
+    Amiri_700BoldItalic,
+  });
+
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) return null;
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: Colors.bg.primary }}>
+      <LanguageProvider>
+        <StatusBar style="light" backgroundColor={Colors.bg.primary} />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: Colors.bg.primary },
+            // Smooth transitions — ease-out on enter (Emil Kowalski)
+            animation: "fade_from_bottom",
+            animationDuration: 250,
+          }}
+        >
+          <Stack.Screen name="index" />
+          <Stack.Screen name="home" />
+          <Stack.Screen name="play" />
+          <Stack.Screen name="game-over" />
+          <Stack.Screen name="majlis-setup" />
+          <Stack.Screen name="majlis-game-over" />
+        </Stack>
+      </LanguageProvider>
+    </GestureHandlerRootView>
+  );
+}

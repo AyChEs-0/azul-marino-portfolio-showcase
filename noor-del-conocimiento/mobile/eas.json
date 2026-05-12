@@ -1,0 +1,53 @@
+{
+  "cli": {
+    "version": ">= 7.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleDebug"
+      },
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "EXPO_PUBLIC_ANTHROPIC_BASE_URL": "https://api.anthropic.com"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_ANTHROPIC_BASE_URL": "https://api.anthropic.com"
+      }
+    },
+    "production": {
+      "channel": "production",
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "env": {
+        "EXPO_PUBLIC_ANTHROPIC_BASE_URL": "https://api.anthropic.com"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "./google-service-account.json",
+        "track": "production"
+      },
+      "ios": {
+        "appleId": "APPLE_ID_HERE",
+        "ascAppId": "APP_STORE_CONNECT_APP_ID",
+        "appleTeamId": "APPLE_TEAM_ID"
+      }
+    }
+  }
+}
