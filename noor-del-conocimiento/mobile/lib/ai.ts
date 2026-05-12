@@ -66,10 +66,9 @@ async function fetchViaProxy(input: FeedbackInput): Promise<string> {
 // ── Direct path (Expo Go / development only) ──────────────────────────────────
 
 async function fetchDirectly(input: FeedbackInput): Promise<string> {
-  // Only allowed in development. Production APKs/IPAs must NOT set this key.
-  if (!__DEV__) return "";
-
   const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
+  // If the key is absent the build is production — AI feedback disabled without proxy.
+  // For preview/test APKs, set EXPO_PUBLIC_ANTHROPIC_API_KEY as an EAS Build Secret.
   if (!apiKey) return "";
 
   const client = new Anthropic({
