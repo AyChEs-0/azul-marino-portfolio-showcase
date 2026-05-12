@@ -1,7 +1,6 @@
 // Claude API integration — reemplaza Genkit/Gemini
-// La API key se pasa via variable de entorno EXPO_PUBLIC_ANTHROPIC_API_KEY
-// IMPORTANTE: Para producción usar un backend proxy (Expo API Routes / Vercel function)
-// para que la API key no quede expuesta en el bundle del cliente.
+// En desarrollo usa EXPO_PUBLIC_ANTHROPIC_API_KEY directamente.
+// En producción el proxy server en /api/feedback guarda la clave fuera del bundle.
 import Anthropic from "@anthropic-ai/sdk";
 import type { Language } from "./types";
 
@@ -18,14 +17,23 @@ const LANGUAGE_NAMES: Record<Language, string> = {
   ma: "Moroccan Arabic (Darija)",
 };
 
-export const getAIFeedback = async (input: FeedbackInput): Promise<string> => {
+async function fetchViaProxy(input: FeedbackInput): Promise<string> {
+  const res = await fetch("/api/feedback", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!res.ok) return "";
+  const data = (await res.json()) as { feedback?: string };
+  return data.feedback ?? "";
+}
+
+async function fetchDirectly(input: FeedbackInput): Promise<string> {
   const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
   if (!apiKey) return "";
 
   const client = new Anthropic({
     apiKey,
-    // dangerouslyAllowBrowser: true — needed only for client-side calls
-    // In production, route through a server endpoint
     dangerouslyAllowBrowser: true,
   });
 
@@ -38,7 +46,7 @@ export const getAIFeedback = async (input: FeedbackInput): Promise<string> => {
     messages: [
       {
         role: "user",
-        content: `You are a warm and knowledgeable Islamic trivia teacher.
+        content: `You are Noor, a warm and knowledgeable Islamic trivia teacher.
 A student just answered an Islamic knowledge question incorrectly.
 Provide a brief, educational explanation (2-3 sentences max) that:
 1. Acknowledges their mistake kindly
@@ -58,4 +66,18 @@ Student's answer: ${input.userAnswer}`,
 
   const block = message.content[0];
   return block.type === "text" ? block.text.trim() : "";
+}
+
+export const getAIFeedback = async (input: FeedbackInput): Promise<string> => {
+  try {
+    // In production (Expo server rendering), proxy keeps the key server-side.
+    // In native builds, fall back to direct client call with the public key.
+    if (typeof window !== "undefined" && window.location?.origin?.startsWith("http")) {
+      return await fetchViaProxy(input);
+    }
+    return await fetchDirectly(input);
+  } catch {
+    // AI feedback is non-critical — swallow errors silently
+    return "";
+  }
 };

@@ -16,6 +16,7 @@ import Animated, {
   withSpring,
   withTiming,
   withSequence,
+  withDelay,
   FadeIn,
   FadeOut,
 } from "react-native-reanimated";
@@ -72,6 +73,10 @@ export default function PlayScreen() {
   const [maxPoints, setMaxPoints] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const goldFlash = useSharedValue(0);
+  const scorePopScale = useSharedValue(0);
+  const scorePopOpacity = useSharedValue(0);
+  const [lastScore, setLastScore] = useState(0);
 
   const totalTime = getTimerDuration(difficulty);
   const currentQ = gameQuestions[currentIndex];
@@ -167,6 +172,20 @@ export default function PlayScreen() {
         const pts = calculateQuestionScore(difficulty, timeLeft, totalTime, category);
         setEarnedPoints((prev) => prev + pts);
         setCorrectCount((prev) => prev + 1);
+        setLastScore(pts);
+        // Gold flash: quick in → out
+        goldFlash.value = withSequence(
+          withTiming(0.18, { duration: 120 }),
+          withDelay(180, withTiming(0, { duration: 250 }))
+        );
+        // Score pop: spring up then fade
+        scorePopScale.value = withSpring(1, { stiffness: 420, damping: 18 });
+        scorePopOpacity.value = withTiming(1, { duration: 120 });
+        scorePopScale.value = withDelay(
+          600,
+          withSpring(0.7, { stiffness: 300, damping: 20 })
+        );
+        scorePopOpacity.value = withDelay(500, withTiming(0, { duration: 300 }));
       } else {
         loseLife();
         // Fetch AI feedback for wrong answer
@@ -237,6 +256,14 @@ export default function PlayScreen() {
     handleNext();
   };
 
+  const goldFlashStyle = useAnimatedStyle(() => ({
+    opacity: goldFlash.value,
+  }));
+  const scorePopStyle = useAnimatedStyle(() => ({
+    opacity: scorePopOpacity.value,
+    transform: [{ scale: scorePopScale.value }],
+  }));
+
   if (!currentQ) {
     return (
       <SafeAreaView style={styles.root}>
@@ -252,6 +279,14 @@ export default function PlayScreen() {
   return (
     <SafeAreaView style={styles.root}>
       <IslamicPatternBackground color={Colors.gold.primary} opacity={0.04} tileSize={52} />
+
+      {/* Gold flash overlay for correct answers */}
+      <Animated.View style={[styles.flashOverlay, goldFlashStyle]} pointerEvents="none" />
+
+      {/* Score pop indicator */}
+      <Animated.View style={[styles.scorePop, scorePopStyle]} pointerEvents="none">
+        <Text style={styles.scorePopText}>+{lastScore}</Text>
+      </Animated.View>
 
       <ScrollView
         style={styles.scroll}
@@ -417,4 +452,24 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   feedbackText: { fontSize: 15, color: Colors.text.primary, lineHeight: 24 },
+  flashOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: Colors.gold.primary,
+    zIndex: 10,
+  },
+  scorePop: {
+    position: "absolute",
+    top: "40%",
+    alignSelf: "center",
+    zIndex: 20,
+    backgroundColor: Colors.gold.primary,
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+    borderRadius: 40,
+  },
+  scorePopText: {
+    fontSize: 28,
+    fontWeight: "800",
+    color: Colors.bg.primary,
+  },
 });
