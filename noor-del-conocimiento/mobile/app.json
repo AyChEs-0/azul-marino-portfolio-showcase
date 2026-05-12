@@ -25,6 +25,9 @@
     "android": {
       "package": "com.noor.conocimiento",
       "versionCode": 1,
+      "compileSdkVersion": 35,
+      "targetSdkVersion": 35,
+      "minSdkVersion": 24,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0a2a1a"
