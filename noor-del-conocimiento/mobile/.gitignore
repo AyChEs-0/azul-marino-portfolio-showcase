@@ -1,0 +1,9 @@
+node_modules/
+.expo/
+dist/
+build/
+.env.local
+.env
+google-service-account.json
+*.jks
+*.keystore
