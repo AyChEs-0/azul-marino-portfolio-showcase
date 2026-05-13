@@ -85,6 +85,7 @@ export default function PlayScreen() {
   // Refs for latest callbacks — avoids stale closures in timer/timeout
   const endGameRef = useRef<(() => Promise<void>) | null>(null);
   const handleTimeOutRef = useRef<(() => void) | null>(null);
+  const visibleOptionsRef = useRef<string[]>([]);
 
   const goldFlash = useSharedValue(0);
   const scorePopScale = useSharedValue(0);
@@ -116,7 +117,9 @@ export default function PlayScreen() {
   // ── Reset state when question changes ───────────────────────────────────────
   useEffect(() => {
     if (!currentQ) return;
-    setVisibleOptions(currentQ.options[language] ?? []);
+    const opts = currentQ.options[language] ?? [];
+    visibleOptionsRef.current = opts;
+    setVisibleOptions(opts);
     setAnswerStates({});
     setIsAnswered(false);
     setAiFeedback(null);
@@ -165,16 +168,14 @@ export default function PlayScreen() {
     timedOutRef.current = true;
     if (timerRef.current) clearInterval(timerRef.current);
 
-    setVisibleOptions((opts) => {
-      // Reveal the correct answer
-      const correct = currentQ?.correctAnswer[language] ?? "";
-      const newStates: Record<string, AnswerState> = {};
-      opts.forEach((opt) => {
-        newStates[opt] = opt === correct ? "correct" : "idle";
-      });
-      setAnswerStates(newStates);
-      return opts;
+    // Read opts from ref — pure, no setState inside another setState updater
+    const opts = visibleOptionsRef.current;
+    const correct = currentQ?.correctAnswer[language] ?? "";
+    const newStates: Record<string, AnswerState> = {};
+    opts.forEach((opt) => {
+      newStates[opt] = opt === correct ? "correct" : "idle";
     });
+    setAnswerStates(newStates);
     setIsAnswered(true);
     loseLife();
   }, [currentQ, language, loseLife]);
@@ -272,7 +273,9 @@ export default function PlayScreen() {
   const useFiftyFifty = useCallback(() => {
     if (lifelines.fiftyFifty <= 0 || isAnswered || !currentQ) return;
     const correct = currentQ.correctAnswer[language];
-    setVisibleOptions((opts) => applyFiftyFifty(opts, correct));
+    const reduced = applyFiftyFifty(visibleOptionsRef.current, correct);
+    visibleOptionsRef.current = reduced;
+    setVisibleOptions(reduced);
     setLifelines((l) => ({ ...l, fiftyFifty: l.fiftyFifty - 1 }));
   }, [lifelines.fiftyFifty, isAnswered, currentQ, language]);
 
