@@ -1,6 +1,3 @@
-// Play Screen — core game loop
-// Migrated from Next.js /play page
-// Features: timer, lives, lifelines (50/50, +15s, skip), AI feedback on wrong answers
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
@@ -8,7 +5,6 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Alert,
 } from "react-native";
 import Animated, {
   useSharedValue,
@@ -18,7 +14,6 @@ import Animated, {
   withSequence,
   withDelay,
   FadeIn,
-  FadeOut,
 } from "react-native-reanimated";
 import { router, useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -38,7 +33,6 @@ import {
   INITIAL_LIVES,
   INITIAL_LIFELINES,
   EXTRA_TIME_BONUS,
-  TOTAL_QUESTIONS_PER_GAME,
 } from "../lib/gameLogic";
 import { getPlayedQuestions, addPlayedQuestions, updateStats } from "../lib/storage";
 import { getAIFeedback } from "../lib/ai";
@@ -46,6 +40,9 @@ import type { Question, Difficulty, GameMode } from "../lib/types";
 import questions from "../data/questions.json";
 
 type AnswerState = "idle" | "selected" | "correct" | "incorrect";
+
+const VALID_DIFFICULTIES: Difficulty[] = ["easy", "medium", "hard"];
+const VALID_CATEGORIES: GameMode[] = ["mix", "Seerah", "Profetas", "Corán y General"];
 
 export default function PlayScreen() {
   const { t } = useTranslation();
@@ -56,12 +53,6 @@ export default function PlayScreen() {
     difficulty: string;
   }>();
 
-  // Validate against allowlists — prevents manipulated deep links from
-  // bypassing game logic with invalid difficulty/category values.
-  const VALID_DIFFICULTIES: Difficulty[] = ["easy", "medium", "hard"];
-  const VALID_CATEGORIES: GameMode[] = [
-    "mix", "Seerah", "Profetas", "Corán y General",
-  ];
   const rawDiff = params.difficulty ?? "easy";
   const rawCat = params.category ?? "mix";
   const difficulty: Difficulty = VALID_DIFFICULTIES.includes(rawDiff as Difficulty)
@@ -71,9 +62,11 @@ export default function PlayScreen() {
     ? (rawCat as GameMode)
     : "mix";
 
+  const totalTime = getTimerDuration(difficulty);
+
   const [gameQuestions, setGameQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(getTimerDuration(difficulty));
+  const [timeLeft, setTimeLeft] = useState(totalTime);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [lifelines, setLifelines] = useState({ ...INITIAL_LIFELINES });
   const [visibleOptions, setVisibleOptions] = useState<string[]>([]);
@@ -84,89 +77,134 @@ export default function PlayScreen() {
   const [earnedPoints, setEarnedPoints] = useState(0);
   const [maxPoints, setMaxPoints] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
+  const [lastScore, setLastScore] = useState(0);
+
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timedOutRef = useRef(false);
+
+  // Refs for latest callbacks — avoids stale closures in timer/timeout
+  const endGameRef = useRef<(() => Promise<void>) | null>(null);
+  const handleTimeOutRef = useRef<(() => void) | null>(null);
+
   const goldFlash = useSharedValue(0);
   const scorePopScale = useSharedValue(0);
   const scorePopOpacity = useSharedValue(0);
-  const [lastScore, setLastScore] = useState(0);
 
-  const totalTime = getTimerDuration(difficulty);
   const currentQ = gameQuestions[currentIndex];
 
-  // Load questions on mount
+  // ── Load questions ──────────────────────────────────────────────────────────
   useEffect(() => {
     const init = async () => {
-      const played = await getPlayedQuestions();
-      const selected = selectGameQuestions(
-        questions as Question[],
-        category,
-        difficulty,
-        language,
-        played
-      );
-      setGameQuestions(selected);
-      const mp = selected.reduce(
-        (acc, q) => acc + (q.difficulty === difficulty ? 1 : 0),
-        0
-      );
-      setMaxPoints(mp);
+      try {
+        const played = await getPlayedQuestions();
+        const selected = selectGameQuestions(
+          questions as Question[],
+          category,
+          difficulty,
+          language,
+          played
+        );
+        setGameQuestions(selected);
+        setMaxPoints(selected.length);
+      } catch {
+        setGameQuestions([]);
+      }
     };
     init();
   }, []);
 
-  // Reset options when question changes
+  // ── Reset state when question changes ───────────────────────────────────────
   useEffect(() => {
     if (!currentQ) return;
-    const opts = currentQ.options[language] ?? [];
-    setVisibleOptions(opts);
+    setVisibleOptions(currentQ.options[language] ?? []);
     setAnswerStates({});
     setIsAnswered(false);
     setAiFeedback(null);
-    setTimeLeft(getTimerDuration(difficulty));
-  }, [currentIndex, currentQ, language]);
+    setTimeLeft(totalTime);
+    timedOutRef.current = false;
+  }, [currentIndex, language]);
 
-  // Timer
-  useEffect(() => {
-    if (isAnswered || !currentQ) return;
-    timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timerRef.current!);
-          handleTimeOut();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timerRef.current!);
-  }, [isAnswered, currentIndex, currentQ]);
-
-  const handleTimeOut = useCallback(() => {
-    if (isAnswered) return;
-    const correct = currentQ?.correctAnswer[language] ?? "";
-    const newStates: Record<string, AnswerState> = {};
-    visibleOptions.forEach((opt) => {
-      newStates[opt] = opt === correct ? "correct" : "idle";
+  // ── endGame ─────────────────────────────────────────────────────────────────
+  const endGame = useCallback(async () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    const playedIds = gameQuestions.map((q) => q.id);
+    await addPlayedQuestions(playedIds);
+    const finalScore = calculateFinalScore(earnedPoints, maxPoints);
+    await updateStats(finalScore, correctCount);
+    router.replace({
+      pathname: "/game-over",
+      params: {
+        score: String(finalScore),
+        correct: String(correctCount),
+        total: String(gameQuestions.length),
+        language,
+        category,
+        difficulty,
+      },
     });
-    setAnswerStates(newStates);
-    setIsAnswered(true);
-    loseLife();
-  }, [isAnswered, currentQ, language, visibleOptions]);
+  }, [gameQuestions, earnedPoints, maxPoints, correctCount, language, category, difficulty]);
 
+  // Keep ref current on every render
+  useEffect(() => { endGameRef.current = endGame; }, [endGame]);
+
+  // ── loseLife ────────────────────────────────────────────────────────────────
   const loseLife = useCallback(() => {
     setLives((prev) => {
       const next = prev - 1;
       if (next <= 0) {
-        setTimeout(endGame, 1200);
+        // Use ref so we always call the latest endGame (not a stale closure)
+        setTimeout(() => endGameRef.current?.(), 1200);
       }
       return next;
     });
   }, []);
 
+  // ── handleTimeOut ───────────────────────────────────────────────────────────
+  const handleTimeOut = useCallback(() => {
+    if (timedOutRef.current) return;
+    timedOutRef.current = true;
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    setVisibleOptions((opts) => {
+      // Reveal the correct answer
+      const correct = currentQ?.correctAnswer[language] ?? "";
+      const newStates: Record<string, AnswerState> = {};
+      opts.forEach((opt) => {
+        newStates[opt] = opt === correct ? "correct" : "idle";
+      });
+      setAnswerStates(newStates);
+      return opts;
+    });
+    setIsAnswered(true);
+    loseLife();
+  }, [currentQ, language, loseLife]);
+
+  // Keep ref current
+  useEffect(() => { handleTimeOutRef.current = handleTimeOut; }, [handleTimeOut]);
+
+  // ── Timer — only decrements, NO side effects inside the updater ─────────────
+  useEffect(() => {
+    if (isAnswered || !currentQ) return;
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => (prev <= 1 ? 0 : prev - 1));
+    }, 1000);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isAnswered, currentIndex, currentQ]);
+
+  // ── React to timeLeft hitting 0 (separate from timer, outside updater) ──────
+  useEffect(() => {
+    if (timeLeft === 0 && !isAnswered && currentQ) {
+      handleTimeOutRef.current?.();
+    }
+  }, [timeLeft]);
+
+  // ── handleAnswer ─────────────────────────────────────────────────────────────
   const handleAnswer = useCallback(
     async (option: string) => {
       if (isAnswered) return;
-      clearInterval(timerRef.current!);
+      if (timerRef.current) clearInterval(timerRef.current);
       setIsAnswered(true);
 
       const correct = currentQ.correctAnswer[language];
@@ -185,22 +223,23 @@ export default function PlayScreen() {
         setEarnedPoints((prev) => prev + pts);
         setCorrectCount((prev) => prev + 1);
         setLastScore(pts);
-        // Gold flash: quick in → out
+
+        // Gold flash
         goldFlash.value = withSequence(
           withTiming(0.18, { duration: 120 }),
           withDelay(180, withTiming(0, { duration: 250 }))
         );
-        // Score pop: spring up then fade
-        scorePopScale.value = withSpring(1, { stiffness: 420, damping: 18 });
-        scorePopOpacity.value = withTiming(1, { duration: 120 });
-        scorePopScale.value = withDelay(
-          600,
-          withSpring(0.7, { stiffness: 300, damping: 20 })
+        // Score pop — withSequence keeps the animations in order on the same value
+        scorePopScale.value = withSequence(
+          withSpring(1, { stiffness: 420, damping: 18 }),
+          withDelay(400, withSpring(0.7, { stiffness: 300, damping: 20 }))
         );
-        scorePopOpacity.value = withDelay(500, withTiming(0, { duration: 300 }));
+        scorePopOpacity.value = withSequence(
+          withTiming(1, { duration: 120 }),
+          withDelay(380, withTiming(0, { duration: 300 }))
+        );
       } else {
         loseLife();
-        // Fetch AI feedback for wrong answer
         setIsLoadingFeedback(true);
         try {
           const feedback = await getAIFeedback({
@@ -209,7 +248,7 @@ export default function PlayScreen() {
             userAnswer: option,
             language,
           });
-          setAiFeedback(feedback);
+          setAiFeedback(feedback || null);
         } catch {
           setAiFeedback(null);
         } finally {
@@ -217,70 +256,52 @@ export default function PlayScreen() {
         }
       }
     },
-    [isAnswered, currentQ, language, visibleOptions, timeLeft, totalTime, difficulty, category]
+    [isAnswered, currentQ, language, visibleOptions, timeLeft, totalTime, difficulty, category, loseLife]
   );
 
-  const handleNext = useCallback(async () => {
+  // ── handleNext ───────────────────────────────────────────────────────────────
+  const handleNext = useCallback(() => {
     if (currentIndex >= gameQuestions.length - 1 || lives <= 0) {
-      endGame();
-      return;
+      endGameRef.current?.();
+    } else {
+      setCurrentIndex((i) => i + 1);
     }
-    setCurrentIndex((i) => i + 1);
   }, [currentIndex, gameQuestions.length, lives]);
 
-  const endGame = useCallback(async () => {
-    const playedIds = gameQuestions.map((q) => q.id);
-    await addPlayedQuestions(playedIds);
-    const finalScore = calculateFinalScore(earnedPoints, maxPoints);
-    await updateStats(finalScore, correctCount);
-    router.replace({
-      pathname: "/game-over",
-      params: {
-        score: finalScore,
-        correct: correctCount,
-        total: gameQuestions.length,
-        language,
-        category,
-        difficulty,
-      },
-    });
-  }, [gameQuestions, earnedPoints, maxPoints, correctCount, language, category, difficulty]);
-
-  // Lifelines
-  const useFiftyFifty = () => {
-    if (lifelines.fiftyFifty <= 0 || isAnswered) return;
+  // ── Lifelines ────────────────────────────────────────────────────────────────
+  const useFiftyFifty = useCallback(() => {
+    if (lifelines.fiftyFifty <= 0 || isAnswered || !currentQ) return;
     const correct = currentQ.correctAnswer[language];
-    const reduced = applyFiftyFifty(visibleOptions, correct);
-    setVisibleOptions(reduced);
+    setVisibleOptions((opts) => applyFiftyFifty(opts, correct));
     setLifelines((l) => ({ ...l, fiftyFifty: l.fiftyFifty - 1 }));
-  };
+  }, [lifelines.fiftyFifty, isAnswered, currentQ, language]);
 
-  const useExtraTime = () => {
+  const useExtraTime = useCallback(() => {
     if (lifelines.extraTime <= 0 || isAnswered) return;
     setTimeLeft((t) => t + EXTRA_TIME_BONUS);
     setLifelines((l) => ({ ...l, extraTime: l.extraTime - 1 }));
-  };
+  }, [lifelines.extraTime, isAnswered]);
 
-  const useSkip = () => {
+  const useSkip = useCallback(() => {
     if (lifelines.skip <= 0 || isAnswered || difficulty === "easy") return;
-    clearInterval(timerRef.current!);
+    if (timerRef.current) clearInterval(timerRef.current);
     setLifelines((l) => ({ ...l, skip: 0 }));
     handleNext();
-  };
+  }, [lifelines.skip, isAnswered, difficulty, handleNext]);
 
-  const goldFlashStyle = useAnimatedStyle(() => ({
-    opacity: goldFlash.value,
-  }));
+  // ── Animated styles ──────────────────────────────────────────────────────────
+  const goldFlashStyle = useAnimatedStyle(() => ({ opacity: goldFlash.value }));
   const scorePopStyle = useAnimatedStyle(() => ({
     opacity: scorePopOpacity.value,
     transform: [{ scale: scorePopScale.value }],
   }));
 
+  // ── Loading state ────────────────────────────────────────────────────────────
   if (!currentQ) {
     return (
       <SafeAreaView style={styles.root}>
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-          <Text style={{ color: Colors.text.primary }}>{t("loading.game")}</Text>
+        <View style={styles.loading}>
+          <Text style={styles.loadingText}>{t("loading.game") ?? "Cargando..."}</Text>
         </View>
       </SafeAreaView>
     );
@@ -292,62 +313,35 @@ export default function PlayScreen() {
     <SafeAreaView style={styles.root}>
       <IslamicPatternBackground color={Colors.gold.primary} opacity={0.04} tileSize={52} />
 
-      {/* Gold flash overlay for correct answers */}
       <Animated.View style={[styles.flashOverlay, goldFlashStyle]} pointerEvents="none" />
-
-      {/* Score pop indicator */}
       <Animated.View style={[styles.scorePop, scorePopStyle]} pointerEvents="none">
         <Text style={styles.scorePopText}>+{lastScore}</Text>
       </Animated.View>
 
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Top bar: lives + progress */}
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+
+        {/* Top bar */}
         <View style={styles.topBar}>
           <View style={styles.lives}>
             {Array.from({ length: INITIAL_LIVES }).map((_, i) => (
-              <Text key={i} style={[styles.heart, i >= lives && styles.heartLost]}>
-                ♥
-              </Text>
+              <Text key={i} style={[styles.heart, i >= lives && styles.heartLost]}>♥</Text>
             ))}
           </View>
           <Text style={styles.progress}>{progressText}</Text>
         </View>
 
-        {/* Timer */}
         <TimerBar timeLeft={timeLeft} totalTime={totalTime} />
 
         {/* Lifelines */}
         <View style={styles.lifelines}>
-          <NoorButton
-            onPress={useFiftyFifty}
-            label={`50/50 (${lifelines.fiftyFifty})`}
-            variant="ghost"
-            size="sm"
-            disabled={lifelines.fiftyFifty === 0 || isAnswered}
-          />
-          <NoorButton
-            onPress={useExtraTime}
-            label={`+${EXTRA_TIME_BONUS}s (${lifelines.extraTime})`}
-            variant="ghost"
-            size="sm"
-            disabled={lifelines.extraTime === 0 || isAnswered}
-          />
+          <NoorButton onPress={useFiftyFifty} label={`50/50 (${lifelines.fiftyFifty})`} variant="ghost" size="sm" disabled={lifelines.fiftyFifty === 0 || isAnswered} />
+          <NoorButton onPress={useExtraTime} label={`+${EXTRA_TIME_BONUS}s (${lifelines.extraTime})`} variant="ghost" size="sm" disabled={lifelines.extraTime === 0 || isAnswered} />
           {difficulty !== "easy" && (
-            <NoorButton
-              onPress={useSkip}
-              label={`↷ (${lifelines.skip})`}
-              variant="ghost"
-              size="sm"
-              disabled={lifelines.skip === 0 || isAnswered}
-            />
+            <NoorButton onPress={useSkip} label={`↷ (${lifelines.skip})`} variant="ghost" size="sm" disabled={lifelines.skip === 0 || isAnswered} />
           )}
         </View>
 
-        {/* Arabic verse (if present) */}
+        {/* Arabic verse */}
         {currentQ.arabicVerse && (
           <NoorCard variant="gold" style={styles.verseCard}>
             <Text style={styles.arabicVerse}>{currentQ.arabicVerse}</Text>
@@ -357,17 +351,12 @@ export default function PlayScreen() {
         {/* Question */}
         <NoorCard style={styles.questionCard}>
           <Text style={styles.diffBadge}>{difficulty.toUpperCase()}</Text>
-          <Text
-            style={[
-              styles.question,
-              isRTL && { textAlign: "right", fontFamily: "Amiri_400Regular", fontSize: 20 },
-            ]}
-          >
+          <Text style={[styles.question, isRTL && styles.questionRTL]}>
             {currentQ.question[language]}
           </Text>
         </NoorCard>
 
-        {/* Options — staggered entrance (Emil Kowalski) */}
+        {/* Options */}
         <View style={styles.options}>
           {visibleOptions.map((opt, i) => (
             <AnswerOption
@@ -382,23 +371,17 @@ export default function PlayScreen() {
           ))}
         </View>
 
-        {/* AI Feedback */}
+        {/* Feedback + Next button */}
         {isAnswered && (
           <Animated.View entering={FadeIn.duration(300)} style={styles.feedbackContainer}>
             {isLoadingFeedback ? (
               <NoorCard>
-                <Text style={styles.feedbackLoading}>
-                  {t("loading.default")}
-                </Text>
+                <Text style={styles.feedbackLoading}>{t("loading.default") ?? "..."}</Text>
               </NoorCard>
             ) : aiFeedback ? (
               <NoorCard variant="dark">
                 <Text style={styles.feedbackLabel}>نور</Text>
-                <Text
-                  style={[styles.feedbackText, isRTL && { textAlign: "right" }]}
-                >
-                  {aiFeedback}
-                </Text>
+                <Text style={[styles.feedbackText, isRTL && { textAlign: "right" }]}>{aiFeedback}</Text>
               </NoorCard>
             ) : null}
 
@@ -422,6 +405,8 @@ export default function PlayScreen() {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Colors.bg.primary },
+  loading: { flex: 1, alignItems: "center", justifyContent: "center" },
+  loadingText: { color: Colors.text.secondary, fontSize: 16 },
   scroll: { flex: 1 },
   content: { padding: 20, gap: 14, paddingBottom: 40 },
   topBar: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
@@ -437,51 +422,21 @@ const styles = StyleSheet.create({
     color: Colors.gold.primary,
     textAlign: "right",
     lineHeight: 36,
-    direction: "rtl",
+    writingDirection: "rtl",
   },
   questionCard: {},
-  diffBadge: {
-    fontSize: 10,
-    color: Colors.text.muted,
-    fontWeight: "700",
-    letterSpacing: 1.5,
-    marginBottom: 8,
-  },
-  question: {
-    fontSize: 17,
-    color: Colors.parchment.primary,
-    fontWeight: "600",
-    lineHeight: 26,
-  },
+  diffBadge: { fontSize: 10, color: Colors.text.muted, fontWeight: "700", letterSpacing: 1.5, marginBottom: 8 },
+  question: { fontSize: 17, color: Colors.parchment.primary, fontWeight: "600", lineHeight: 26 },
+  questionRTL: { textAlign: "right", fontFamily: "Amiri_400Regular", fontSize: 20 },
   options: { gap: 10 },
   feedbackContainer: { gap: 12 },
   feedbackLoading: { color: Colors.text.muted, textAlign: "center", fontStyle: "italic" },
-  feedbackLabel: {
-    fontFamily: "Amiri_700Bold",
-    fontSize: 16,
-    color: Colors.gold.primary,
-    marginBottom: 8,
-    textAlign: "right",
-  },
+  feedbackLabel: { fontFamily: "Amiri_700Bold", fontSize: 16, color: Colors.gold.primary, marginBottom: 8, textAlign: "right" },
   feedbackText: { fontSize: 15, color: Colors.text.primary, lineHeight: 24 },
-  flashOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: Colors.gold.primary,
-    zIndex: 10,
-  },
+  flashOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: Colors.gold.primary, zIndex: 10 },
   scorePop: {
-    position: "absolute",
-    top: "40%",
-    alignSelf: "center",
-    zIndex: 20,
-    backgroundColor: Colors.gold.primary,
-    paddingHorizontal: 24,
-    paddingVertical: 10,
-    borderRadius: 40,
+    position: "absolute", top: "40%", alignSelf: "center", zIndex: 20,
+    backgroundColor: Colors.gold.primary, paddingHorizontal: 24, paddingVertical: 10, borderRadius: 40,
   },
-  scorePopText: {
-    fontSize: 28,
-    fontWeight: "800",
-    color: Colors.bg.primary,
-  },
+  scorePopText: { fontSize: 28, fontWeight: "800", color: Colors.bg.primary },
 });
