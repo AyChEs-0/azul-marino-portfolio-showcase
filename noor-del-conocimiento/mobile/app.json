@@ -25,8 +25,6 @@
     "android": {
       "package": "com.noor.conocimiento",
       "versionCode": 1,
-      "targetSdkVersion": 35,
-      "minSdkVersion": 24,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0a2a1a"
@@ -47,6 +45,14 @@
           "backgroundColor": "#0a2a1a",
           "image": "./assets/splash-icon.png",
           "imageWidth": 200
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.9.25"
+          }
         }
       ]
     ],
