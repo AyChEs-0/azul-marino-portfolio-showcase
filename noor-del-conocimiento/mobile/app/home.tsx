@@ -50,11 +50,16 @@ export default function HomeScreen() {
   const [selectedCategory, setSelectedCategory] = useState<GameMode | null>(null);
 
   const handleStartMusafir = (difficulty: Difficulty) => {
+    if (!selectedCategory) {
+      // Defensive — UI flow should never allow this, but bail safely if it does.
+      setStep("category");
+      return;
+    }
     router.push({
       pathname: "/play",
       params: {
         mode: "musafir",
-        category: selectedCategory!,
+        category: selectedCategory,
         difficulty,
         language,
       },

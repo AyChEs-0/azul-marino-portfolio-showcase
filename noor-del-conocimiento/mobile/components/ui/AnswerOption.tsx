@@ -17,7 +17,9 @@ type AnswerState = "idle" | "selected" | "correct" | "incorrect";
 interface AnswerOptionProps {
   label: string;
   state: AnswerState;
-  onPress: () => void;
+  // Stable handler called with the option value — lets the parent memoize
+  // without recreating an arrow function per row on every render.
+  onSelect: (value: string) => void;
   disabled?: boolean;
   isRTL?: boolean;
   index: number;
@@ -25,10 +27,10 @@ interface AnswerOptionProps {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export const AnswerOption: React.FC<AnswerOptionProps> = ({
+const AnswerOptionBase: React.FC<AnswerOptionProps> = ({
   label,
   state,
-  onPress,
+  onSelect,
   disabled = false,
   isRTL = false,
   index,
@@ -85,7 +87,7 @@ export const AnswerOption: React.FC<AnswerOptionProps> = ({
 
   return (
     <AnimatedPressable
-      onPress={disabled ? undefined : onPress}
+      onPress={disabled ? undefined : () => onSelect(label)}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       style={[animatedStyle, containerStyle]}
@@ -106,6 +108,10 @@ export const AnswerOption: React.FC<AnswerOptionProps> = ({
     </AnimatedPressable>
   );
 };
+
+// Memoized — option props only change when the question/state/disabled changes,
+// not when the parent re-renders from the timer tick.
+export const AnswerOption = React.memo(AnswerOptionBase);
 
 const styles = StyleSheet.create({
   container: {
