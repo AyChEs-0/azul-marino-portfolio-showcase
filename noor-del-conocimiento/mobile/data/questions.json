@@ -3398,50 +3398,6 @@
     "flag": false
   },
   {
-    "id": 91,
-    "question": {
-      "es": "¿A quiénes visitó el Profeta Muhammad (ﷺ) en la ciudad de Taif para invitarlos al Islam?",
-      "en": "Who did Prophet Muhammad (ﷺ) visit in the city of Ta'if to invite to Islam?",
-      "ma": "شكون زار النبي محمد (ﷺ) فمدينة الطائف باش يدعوهم للإسلام؟"
-    },
-    "options": {
-      "es": [
-        "Su tío Abu Lahab",
-        "Su primo Ali ibn Abi Talib",
-        "Los líderes de la tribu Thaqif",
-        "Su tío Hamza"
-      ],
-      "en": [
-        "His uncle Abu Lahab",
-        "His cousin Ali ibn Abi Talib",
-        "The leaders of the Thaqif tribe",
-        "His uncle Hamza"
-      ],
-      "ma": [
-        "عمو أبو لهب",
-        "ولد عمو علي بن أبي طالب",
-        "زعماء قبيلة ثقيف",
-        "عمو حمزة"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Los líderes de la tribu Thaqif",
-      "en": "The leaders of the Thaqif tribe",
-      "ma": "قادة قبيلة ثقيف"
-    },
-    "category": "Seerah",
-    "difficulty": "medium",
-    "explanation": {
-      "es": "Después del Año de la Tristeza, el Profeta viajó a Ta'if con la esperanza de que su gente aceptara el Islam, pero en cambio fue recibido con una hostilidad y un rechazo extremos.",
-      "en": "After the Year of Sorrow, the Prophet traveled to Ta'if hoping its people would accept Islam, but he was met with extreme hostility and rejection instead.",
-      "ma": "من بعد عام الحزن، النبي سافر للطائف على أمل أن الناس ديالها يسلمو، و لكن لقا منهم عداوة و رفض شديد."
-    },
-    "source": "Seerah — el Profeta fue a Taif en el 'Año de la Tristeza' (10 de la Profecía) a invitar a los líderes de Thaqif al Islam, no a visitar un pariente",
-    "verified": true,
-    "flag": true,
-    "correction_note": "CORREGIDA: La pregunta dice 'pariente famoso' pero el Profeta fue a Taif a invitar al Islam a los líderes de la tribu Thaqif (Ibn Abd Yalil y otros), NO a visitar a un pariente. La pregunta debe reformularse: '¿A quiénes visitó el Profeta en Taif para invitarlos al Islam?' con respuesta: 'Los líderes de la tribu Thaqif'."
-  },
-  {
     "id": 92,
     "question": {
       "es": "¿Cuál es el nombre de la primera esposa del Profeta (ﷺ), que fue una exitosa mujer de negocios?",
@@ -4274,50 +4230,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 115,
-    "question": {
-      "es": "¿Quién fue el primer esclavo a abrazar el Islam?",
-      "en": "Who was the first slave to embrace Islam?",
-      "ma": "شكون هو أول عبد دخل للإسلام؟"
-    },
-    "options": {
-      "es": [
-        "Bilal ibn Rabah",
-        "Zayd ibn Harithah",
-        "Salman al-Farisi",
-        "Suhayb al-Rumi"
-      ],
-      "en": [
-        "Bilal ibn Rabah",
-        "Zayd ibn Harithah",
-        "Salman al-Farisi",
-        "Suhayb al-Rumi"
-      ],
-      "ma": [
-        "بلال بن رباح",
-        "زيد بن حارثة",
-        "سلمان الفارسي",
-        "صهيب الرومي"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Zayd ibn Harithah",
-      "en": "Zayd ibn Harithah",
-      "ma": "زيد بن حارثة"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Zayd ibn Harithah, el esclavo liberado del Profeta, fue el primer esclavo en abrazar el Islam.",
-      "en": "Zayd ibn Harithah, the freed slave of the Prophet, was the first slave to embrace Islam.",
-      "ma": "زيد بن حارثة، العبد المحرر ديال النبي، كان أول عبد دخل للإسلام."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Zayd ibn Harithah fue el mawla (liberto) del Profeta, liberado antes de la profecía. Si 'primer esclavo' significa 'esclavo en el momento de convertirse', la respuesta sería Bilal ibn Rabah (aún esclavo cuando abrazó el Islam). Si significa 'liberto/mawla', sería Zayd. La pregunta debe aclarar este matiz o eliminarse."
   },
   {
     "id": 116,
@@ -5154,50 +5066,6 @@
     "correction_note": ""
   },
   {
-    "id": 138,
-    "question": {
-      "es": "¿Qué compañero fue el primero en entrar al Paraíso según un hadiz?",
-      "en": "Which companion was told he would be the first to enter Paradise according to a hadith?",
-      "ma": "أشمن صحابي قيل ليه أنه غيكون أول واحد يدخل الجنة حسب حديث؟"
-    },
-    "options": {
-      "es": [
-        "Umar ibn al-Khattab",
-        "Abu Bakr al-Siddiq",
-        "Ali ibn Abi Talib",
-        "Bilal ibn Rabah"
-      ],
-      "en": [
-        "Umar ibn al-Khattab",
-        "Abu Bakr al-Siddiq",
-        "Ali ibn Abi Talib",
-        "Bilal ibn Rabah"
-      ],
-      "ma": [
-        "عمر بن الخطاب",
-        "أبو بكر الصديق",
-        "علي بن أبي طالب",
-        "بلال بن رباح"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Abu Bakr al-Siddiq",
-      "en": "Abu Bakr al-Siddiq",
-      "ma": "أبو بكر الصديق"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Según varios hadices, Abu Bakr al-Siddiq será el primero de la umma en entrar al Paraíso.",
-      "en": "According to several hadiths, Abu Bakr al-Siddiq will be the first of the ummah to enter Paradise.",
-      "ma": "حسب بزاف من الأحاديث، أبو بكر الصديق غيكون أول واحد من الأمة يدخل الجنة."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: No se encontró un hadith sahih específico que diga que Abu Bakr fue el 'primero en entrar al Paraíso entre los compañeros'. Hay hadiths sobre su virtud (Tirmidhi 3747) y sobre la alegría de entrar al Paraíso, pero el Profeta mismo sería el primero. Esta pregunta requiere verificación más profunda o debe eliminarse."
-  },
-  {
     "id": 139,
     "question": {
       "es": "¿Cuántos de los compañeros del Profeta recibieron la buena nueva del Paraíso en vida?",
@@ -5284,50 +5152,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 141,
-    "question": {
-      "es": "¿Qué compañero fue el primero en hacer la Hégira a Abisinia?",
-      "en": "Which companion was the first to make the Hijra to Abyssinia?",
-      "ma": "أشمن صحابي كان أول واحد هاجر للحبشة؟"
-    },
-    "options": {
-      "es": [
-        "Abu Bakr",
-        "Uthman ibn Affan",
-        "Umar ibn al-Khattab",
-        "Bilal ibn Rabah"
-      ],
-      "en": [
-        "Abu Bakr",
-        "Uthman ibn Affan",
-        "Umar ibn al-Khattab",
-        "Bilal ibn Rabah"
-      ],
-      "ma": [
-        "أبو بكر",
-        "عثمان بن عفان",
-        "عمر بن الخطاب",
-        "بلال بن رباح"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Uthman ibn Affan",
-      "en": "Uthman ibn Affan",
-      "ma": "عثمان بن عفان"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Uthman ibn Affan y su esposa Ruqayyah (hija del Profeta) fueron los primeros en emigrar a Abisinia.",
-      "en": "Uthman ibn Affan and his wife Ruqayyah (the Prophet's daughter) were the first to emigrate to Abyssinia.",
-      "ma": "عثمان بن عفان و زوجتو رقية (بنت النبي) كانو أول من هاجر للحبشة."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Uthman ibn Affan participó en las dos hégiras (a Abisinia y a Medina), siendo conocido como 'dhu al-hijratayn'. Sin embargo, fue Abu Salama ibn Abd al-Assad quien según fuentes históricas (ibn Hisham, Tabari) emigró primero a Abisinia. La afirmación de que Uthman fue 'el primero' no está bien documentada en hadith sahih."
   },
   {
     "id": 142,
@@ -5858,50 +5682,6 @@
     "correction_note": ""
   },
   {
-    "id": 154,
-    "question": {
-      "es": "¿Cuántas letras tiene el Corán?",
-      "en": "How many letters does the Quran have?",
-      "ma": "شحال من حرف فالقرآن؟"
-    },
-    "options": {
-      "es": [
-        "200,000",
-        "323,671",
-        "400,000",
-        "500,000"
-      ],
-      "en": [
-        "200,000",
-        "323,671",
-        "400,000",
-        "500,000"
-      ],
-      "ma": [
-        "200,000",
-        "323,671",
-        "400,000",
-        "500,000"
-      ]
-    },
-    "correctAnswer": {
-      "es": "323,671",
-      "en": "323,671",
-      "ma": "323,671"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El Corán contiene aproximadamente 323,671 letras según los eruditos del tajwid.",
-      "en": "The Quran contains approximately 323,671 letters according to tajwid scholars.",
-      "ma": "القرآن فيه حوالي 323,671 حرف حسب علماء التجويد."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El número exacto de letras del Corán (323,671) varía según la metodología de conteo. Diferentes estudios dan cifras distintas (320,015 — 323,671 — 325,015). El número 323,671 aparece en fuentes educativas islámicas pero no está universalmente acordado. Requiere verificación con concordancias coránicas especializadas."
-  },
-  {
     "id": 155,
     "question": {
       "es": "¿Cuál es la Surah que se repite dos veces en el Corán?",
@@ -6032,50 +5812,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 158,
-    "question": {
-      "es": "¿Cuál es el versículo más corto del Corán?",
-      "en": "What is the shortest verse in the Quran?",
-      "ma": "أشنو هي أقصر آية فالقرآن؟"
-    },
-    "options": {
-      "es": [
-        "Al-Fajr 89:1",
-        "Al-Asr 103:1",
-        "Muddaththir 74:21",
-        "Al-Kawthar 108:1"
-      ],
-      "en": [
-        "Al-Fajr 89:1",
-        "Al-Asr 103:1",
-        "Muddaththir 74:21",
-        "Al-Kawthar 108:1"
-      ],
-      "ma": [
-        "الفجر 89:1",
-        "العصر 103:1",
-        "المدثر 74:21",
-        "الكوثر 108:1"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Muddaththir 74:21",
-      "en": "Muddaththir 74:21",
-      "ma": "المدثر 74:21"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El versículo más corto es 'Thumma nazara' (74:21) que tiene solo dos palabras en árabe.",
-      "en": "The shortest verse is 'Thumma nazara' (74:21) which has only two words in Arabic.",
-      "ma": "أقصر آية هي 'ثم نظر' (74:21) اللي فيها غير كلمتين بالعربية."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El versículo más corto del Corán es debatido entre estudiosos. Muddaththir 74:21 (ثم نظر — 'Luego miró') es frecuentemente citado, pero hay otros versículos igualmente cortos (ej. Surah 55:64 'mudhammataan'). El criterio para 'más corto' (letras, palabras, sílabas) afecta la respuesta. Verificar con estudiosos de ciencias coránicas."
   },
   {
     "id": 159,
@@ -6298,50 +6034,6 @@
     "correction_note": ""
   },
   {
-    "id": 164,
-    "question": {
-      "es": "¿Cuántas veces se menciona la palabra 'Salat' (oración) en el Corán?",
-      "en": "How many times is the word 'Salat' (prayer) mentioned in the Quran?",
-      "ma": "شحال من مرة تذكرات كلمة 'الصلاة' فالقرآن؟"
-    },
-    "options": {
-      "es": [
-        "5",
-        "67",
-        "99",
-        "114"
-      ],
-      "en": [
-        "5",
-        "67",
-        "99",
-        "114"
-      ],
-      "ma": [
-        "5",
-        "67",
-        "99",
-        "114"
-      ]
-    },
-    "correctAnswer": {
-      "es": "67",
-      "en": "67",
-      "ma": "67"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "La palabra 'Salat' y sus derivados se mencionan 67 veces en el Corán, reflejando la importancia de la oración en el Islam.",
-      "en": "The word 'Salat' and its derivatives are mentioned 67 times in the Quran, reflecting the importance of prayer in Islam.",
-      "ma": "كلمة 'الصلاة' و مشتقاتها تذكرات 67 مرة فالقرآن، و هاد الشيء يعكس أهمية الصلاة فالإسلام."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El número exacto de veces que aparece 'Salat' (oración) en el Corán varía según el método de conteo (forma raíz, derivados, etc.). La cifra 67 es citada en algunos materiales educativos islámicos pero no está confirmada con concordancia coránica oficial. Requiere verificación con Al-Mu'jam Al-Mufahras."
-  },
-  {
     "id": 165,
     "question": {
       "es": "¿Cuántas veces se menciona la palabra 'Yawm' (día) en el Corán?",
@@ -6384,50 +6076,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 166,
-    "question": {
-      "es": "¿Cuál es la primera Surah revelada completa?",
-      "en": "What is the first complete Surah to be revealed?",
-      "ma": "أشنو هي أول سورة كاملة نزلات؟"
-    },
-    "options": {
-      "es": [
-        "Al-Alaq",
-        "Al-Fatihah",
-        "Al-Muddaththir",
-        "Al-Muzzammil"
-      ],
-      "en": [
-        "Al-Alaq",
-        "Al-Fatihah",
-        "Al-Muddaththir",
-        "Al-Muzzammil"
-      ],
-      "ma": [
-        "العلق",
-        "الفاتحة",
-        "المدثر",
-        "المزمل"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Al-Fatihah",
-      "en": "Al-Fatihah",
-      "ma": "الفاتحة"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Aunque los primeros versículos revelados fueron de Al-Alaq, la primera Surah completa revelada fue Al-Fatihah.",
-      "en": "Although the first verses revealed were from Al-Alaq, the first complete Surah revealed was Al-Fatihah.",
-      "ma": "وخا أول آيات نزلات كانت من العلق، أول سورة كاملة نزلات كانت الفاتحة."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Las primeras palabras reveladas fueron Quran 96:1-5 (Al-Alaq). La primera Surah revelada COMPLETA es debatida: algunos dicen Al-Fatihah (necesaria para la oración), otros dicen Al-Muddaththir (74) o Al-Masad (111). No hay consenso unánime sobre cuál fue la primera surah revelada como una unidad completa."
   },
   {
     "id": 167,
@@ -6736,50 +6384,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 175,
-    "question": {
-      "es": "¿Cuántos pasos tiene el Wudu (ablución menor)?",
-      "en": "How many steps does Wudu (minor ablution) have?",
-      "ma": "شحال من خطوة فالوضوء؟"
-    },
-    "options": {
-      "es": [
-        "4",
-        "5",
-        "6",
-        "7"
-      ],
-      "en": [
-        "4",
-        "5",
-        "6",
-        "7"
-      ],
-      "ma": [
-        "4",
-        "5",
-        "6",
-        "7"
-      ]
-    },
-    "correctAnswer": {
-      "es": "6",
-      "en": "6",
-      "ma": "6"
-    },
-    "category": "Corán y General",
-    "difficulty": "medium",
-    "explanation": {
-      "es": "El Wudu tiene 6 pasos obligatorios: intención, lavado de cara, manos hasta los codos, masaje de cabeza, lavado de pies y orden.",
-      "en": "Wudu has 6 obligatory steps: intention, washing the face, hands up to elbows, wiping the head, washing the feet, and order.",
-      "ma": "الوضوء فيه 6 خطوات واجبة: النية، غسل الوجه، الأيدي للمرافق، مسح الرأس، غسل الأرجل، و الترتيب."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Los actos obligatorios (fard) del Wudu varían según la escuela jurídica (madhab). Shafi'i: 6 obligatorios; Hanafi: 4; Maliki: 7; Hanbali: 6. La respuesta '6' corresponde a la escuela Shafi'i/Hanbali pero no es universal. La pregunta debe especificar según qué madhab o formularse de otra manera."
   },
   {
     "id": 176,
@@ -7352,50 +6956,6 @@
     "verified": true,
     "flag": false,
     "correction_note": "Qarun (Korah bíblico) era de los Banu Israel y contemporáneo de Musa (AS). Fue destruido junto con su riqueza por su soberbia (Quran 28:81)."
-  },
-  {
-    "id": 189,
-    "question": {
-      "es": "¿Cuántas rak'at tiene la oración de Tarawih?",
-      "en": "How many rak'at does the Tarawih prayer have?",
-      "ma": "شحال من ركعة فصلاة التراويح؟"
-    },
-    "options": {
-      "es": [
-        "8",
-        "11",
-        "20",
-        "23"
-      ],
-      "en": [
-        "8",
-        "11",
-        "20",
-        "23"
-      ],
-      "ma": [
-        "8",
-        "11",
-        "20",
-        "23"
-      ]
-    },
-    "correctAnswer": {
-      "es": "20",
-      "en": "20",
-      "ma": "20"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "La oración de Tarawih tiene 20 rak'at según la práctica establecida por el Califa Umar ibn al-Khattab.",
-      "en": "The Tarawih prayer has 20 rak'at according to the practice established by Caliph Umar ibn al-Khattab.",
-      "ma": "صلاة التراويح فيها 20 ركعة حسب الممارسة اللي أسسها الخليفة عمر بن الخطاب."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El número de rak'at del Tarawih es debatido. Umar ibn al-Khattab estableció 20 rak'at (Sahih Bukhari/Muwatta), que es la opinión de las cuatro escuelas jurídicas (madhabs). Sin embargo, algunos estudiosos modernos citan hadiths sobre la oración nocturna del Profeta para defender 8 rak'at. La respuesta '20' es históricamente establecida por el consenso de los Sahabah."
   },
   {
     "id": 190,
@@ -8100,50 +7660,6 @@
     "flag": false
   },
   {
-    "id": 207,
-    "question": {
-      "es": "¿Cuántos creyentes se salvaron en el arca del Profeta Nuh?",
-      "en": "How many believers were saved in Prophet Nuh's ark?",
-      "ma": "شحال من مؤمن نجا فسفينة النبي نوح؟"
-    },
-    "options": {
-      "es": [
-        "8",
-        "40",
-        "80",
-        "100"
-      ],
-      "en": [
-        "8",
-        "40",
-        "80",
-        "100"
-      ],
-      "ma": [
-        "8",
-        "40",
-        "80",
-        "100"
-      ]
-    },
-    "correctAnswer": {
-      "es": "80",
-      "en": "80",
-      "ma": "80"
-    },
-    "category": "Profetas",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Según la tradición islámica, aproximadamente 80 personas se salvaron en el arca del Profeta Nuh.",
-      "en": "According to Islamic tradition, approximately 80 people were saved in Prophet Nuh's ark.",
-      "ma": "حسب التقاليد الإسلامية، حوالي 80 شخص نجاو فسفينة النبي نوح."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Quran 11:40 solo dice 'pocos creyentes' sin numero exacto. El numero 80 proviene de relatos de tafsir no respaldados por hadith sahih verificado. Considerar eliminar o reformular la pregunta."
-  },
-  {
     "id": 208,
     "question": {
       "es": "¿Cuál fue el nombre del hijo del Profeta Nuh que se negó a subir al arca?",
@@ -8186,50 +7702,6 @@
     "verified": true,
     "flag": false,
     "correction_note": "El Corán no menciona el nombre; Yam y Kan'an son dos tradiciones de tafsir para el mismo hijo"
-  },
-  {
-    "id": 209,
-    "question": {
-      "es": "¿Cuántos años tenía el Profeta Ibrahim cuando fue arrojado al fuego?",
-      "en": "How old was Prophet Ibrahim when he was thrown into the fire?",
-      "ma": "شحال كان فالعمر ديال النبي إبراهيم فاش تلاحو فالعافية؟"
-    },
-    "options": {
-      "es": [
-        "15",
-        "20",
-        "30",
-        "40"
-      ],
-      "en": [
-        "15",
-        "20",
-        "30",
-        "40"
-      ],
-      "ma": [
-        "15",
-        "20",
-        "30",
-        "40"
-      ]
-    },
-    "correctAnswer": {
-      "es": "20",
-      "en": "20",
-      "ma": "20"
-    },
-    "category": "Profetas",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Según las tradiciones islámicas, el Profeta Ibrahim tenía aproximadamente 20 años cuando fue arrojado al fuego por su pueblo.",
-      "en": "According to Islamic traditions, Prophet Ibrahim was approximately 20 years old when he was thrown into the fire by his people.",
-      "ma": "حسب التقاليد الإسلامية، النبي إبراهيم كان عندو حوالي 20 سنة فاش تلاحو فالعافية من طرف القوم ديالو."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: La edad de Ibrahim al ser arrojado al fuego no se menciona en el Corán ni en hadith sahih verificado. El número 20 aparece en algunos relatos de tafsir de autenticidad dudosa. Considerar eliminar esta pregunta."
   },
   {
     "id": 210,
@@ -9571,50 +9043,6 @@
     "correction_note": "CORREGIDA: Qarun NO es profeta. Era un hombre rico y arrogante del pueblo de Musa que fue destruido. El enunciado original era incorrecto al llamarle 'profeta'."
   },
   {
-    "id": 241,
-    "question": {
-      "es": "¿Cuál fue el nombre del profeta que fue enviado a los Amalecitas?",
-      "en": "Which prophet was sent to the Amalekites?",
-      "ma": "أشمن نبي ترسل للعماليق؟"
-    },
-    "options": {
-      "es": [
-        "Profeta Hud",
-        "Profeta Saleh",
-        "Profeta Shuaib",
-        "Profeta Dawud"
-      ],
-      "en": [
-        "Prophet Hud",
-        "Prophet Saleh",
-        "Prophet Shuaib",
-        "Prophet Dawud"
-      ],
-      "ma": [
-        "النبي هود",
-        "النبي صالح",
-        "النبي شعيب",
-        "النبي داوود"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Profeta Dawud",
-      "en": "Prophet Dawud",
-      "ma": "النبي داوود"
-    },
-    "category": "Profetas",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El Profeta Dawud (David) mató al gigante Jalut (Goliat) de los Amalecitas con una honda, siendo aún joven.",
-      "en": "Prophet Dawud (David) killed the giant Jalut (Goliath) of the Amalekites with a sling, while still young.",
-      "ma": "النبي داوود قتل العملاق جالوت ديال العماليق بالمقلاع، و هو باقي شاب."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "INCORRECTA: No hay evidencia en el Corán ni en hadith sahih de que Dawud fuera enviado a los Amalecitas. Dawud fue profeta de los Israelitas. El Corán (2:246-251) describe su batalla contra Jalut pero sin identificar al pueblo como Amalecitas. Esta pregunta debe ser eliminada o reformulada con una afirmacion verificable."
-  },
-  {
     "id": 243,
     "question": {
       "es": "¿Cuál fue el nombre del rey que desafió al Profeta Ibrahim?",
@@ -9788,50 +9216,6 @@
     "flag": false
   },
   {
-    "id": 247,
-    "question": {
-      "es": "¿Cuál fue el nombre del profeta que fue enviado a los Edomitas?",
-      "en": "Which prophet was sent to the Edomites?",
-      "ma": "أشمن نبي ترسل للأدوميين؟"
-    },
-    "options": {
-      "es": [
-        "Profeta Hud",
-        "Profeta Ilyas",
-        "Profeta Ayyub",
-        "Profeta Shuaib"
-      ],
-      "en": [
-        "Prophet Hud",
-        "Prophet Ilyas",
-        "Prophet Ayyub",
-        "Prophet Shuaib"
-      ],
-      "ma": [
-        "النبي هود",
-        "النبي إلياس",
-        "النبي أيوب",
-        "النبي شعيب"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Profeta Ayyub",
-      "en": "Prophet Ayyub",
-      "ma": "النبي أيوب"
-    },
-    "category": "Profetas",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El Profeta Ayyub (Job) es asociado con la región de Edom (actual Jordania/sur de Siria) según las tradiciones islámicas.",
-      "en": "Prophet Ayyub (Job) is associated with the region of Edom (present-day Jordan/southern Syria) according to Islamic traditions.",
-      "ma": "النبي أيوب كيرتبط بمنطقة أدوم (الأردن الحالي/جنوب سوريا) حسب التقاليد الإسلامية."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El Corán no especifica a qué pueblo fue enviado Ayyub. La identificacion con los Edomitas no aparece en fuentes islamicas verificadas (Quran 21:83-84; 38:41-44 solo mencionan su prueba y paciencia). Esta pregunta deberia ser eliminada o reformulada."
-  },
-  {
     "id": 248,
     "question": {
       "es": "¿Cuántos años estuvo el Profeta Ayyub enfermo?",
@@ -9960,50 +9344,6 @@
     "source": "Quran 19:49 (Surah Maryam); mencionado 16 veces en el Corán",
     "verified": true,
     "flag": false
-  },
-  {
-    "id": 251,
-    "question": {
-      "es": "¿Cuál fue el nombre del compañero que fue el primero en morir en combate en el Islam?",
-      "en": "Who was the first companion to die in combat in Islam?",
-      "ma": "شكون هو أول صحابي مات فالمعركة فالإسلام؟"
-    },
-    "options": {
-      "es": [
-        "Hamza ibn Abd al-Muttalib",
-        "Ubaydah ibn al-Harith",
-        "Sa'd ibn Abi Waqqas",
-        "Miqdad ibn al-Aswad"
-      ],
-      "en": [
-        "Hamza ibn Abd al-Muttalib",
-        "Ubaydah ibn al-Harith",
-        "Sa'd ibn Abi Waqqas",
-        "Miqdad ibn al-Aswad"
-      ],
-      "ma": [
-        "حمزة بن عبد المطلب",
-        "عبيدة بن الحارث",
-        "سعد بن أبي وقاص",
-        "المقداد بن الأسود"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Ubaydah ibn al-Harith",
-      "en": "Ubaydah ibn al-Harith",
-      "ma": "عبيدة بن الحارث"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Ubaydah ibn al-Harith fue herido en la Batalla de Badr y murió de sus heridas, siendo el primer mártir en combate del Islam.",
-      "en": "Ubaydah ibn al-Harith was wounded at the Battle of Badr and died from his wounds, being the first martyr in combat in Islam.",
-      "ma": "عبيدة بن الحارث تجرح فمعركة بدر و مات من جروحو، و كان أول شهيد فالمعركة فالإسلام."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Ubaydah ibn al-Harith fue gravemente herido en los duelos de Badr y murió de sus heridas en Al-Safra después de la batalla. Sin embargo, Haritha ibn Suraqa murió DURANTE la batalla de Badr con una flecha (Sahih Bukhari 3976). El 'primero en morir en combate' es debatible entre estas dos narrativas."
   },
   {
     "id": 252,
@@ -10268,50 +9608,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 258,
-    "question": {
-      "es": "¿Cuál fue el nombre del compañero que fue el primer gobernador de Medina?",
-      "en": "Who was the companion who was the first governor of Medina?",
-      "ma": "شكون هو الصحابي اللي كان أول حاكم للمدينة؟"
-    },
-    "options": {
-      "es": [
-        "Abu Bakr",
-        "Umar",
-        "Sa'd ibn Ubadah",
-        "Mus'ab ibn Umayr"
-      ],
-      "en": [
-        "Abu Bakr",
-        "Umar",
-        "Sa'd ibn Ubadah",
-        "Mus'ab ibn Umayr"
-      ],
-      "ma": [
-        "أبو بكر",
-        "عمر",
-        "سعد بن عبادة",
-        "مصعب بن عمير"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Sa'd ibn Ubadah",
-      "en": "Sa'd ibn Ubadah",
-      "ma": "سعد بن عبادة"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Sa'd ibn Ubadah fue el jefe de los Khazraj de Medina y uno de los líderes de los Ansar (los ayudantes de Medina).",
-      "en": "Sa'd ibn Ubadah was the chief of the Khazraj of Medina and one of the leaders of the Ansar (the helpers of Medina).",
-      "ma": "سعد بن عبادة كان رئيس الخزرج فالمدينة و واحد من زعماء الأنصار."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Sa'd ibn Ubadah fue el líder (sayyid) de los Ansar en Medina, pero no está documentado como 'primer gobernador oficial de Medina' en hadith sahih. El Profeta nombró diferentes personas para funciones administrativas. Esta pregunta debe reformularse o eliminarse."
   },
   {
     "id": 259,
@@ -11632,50 +10928,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 289,
-    "question": {
-      "es": "¿Cuántos hadices contiene el Sahih al-Bukhari?",
-      "en": "How many hadiths does Sahih al-Bukhari contain?",
-      "ma": "شحال من حديث فصحيح البخاري؟"
-    },
-    "options": {
-      "es": [
-        "3,000",
-        "4,000",
-        "7,563",
-        "10,000"
-      ],
-      "en": [
-        "3,000",
-        "4,000",
-        "7,563",
-        "10,000"
-      ],
-      "ma": [
-        "3,000",
-        "4,000",
-        "7,563",
-        "10,000"
-      ]
-    },
-    "correctAnswer": {
-      "es": "7,563",
-      "en": "7,563",
-      "ma": "7,563"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El Sahih al-Bukhari contiene 7,563 hadices (con repeticiones) o aproximadamente 2,602 hadices únicos seleccionados de 600,000.",
-      "en": "Sahih al-Bukhari contains 7,563 hadiths (with repetitions) or approximately 2,602 unique hadiths selected from 600,000.",
-      "ma": "صحيح البخاري فيه 7,563 حديث (مع التكرار) أو حوالي 2,602 حديث فريد مختار من 600,000."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El número de hadices en el Sahih al-Bukhari varía según el método de conteo: ~7,275 hadices únicos o ~9,082 incluyendo repeticiones. La cifra 7,563 es una entre varias contadas por diferentes estudiosos. Requiere verificación con edición crítica."
   },
   {
     "id": 290,
@@ -13921,94 +13173,6 @@
     "flag": false
   },
   {
-    "id": 342,
-    "question": {
-      "es": "¿Cuántos profetas son mencionados en la Surah Maryam?",
-      "en": "How many prophets are mentioned in Surah Maryam?",
-      "ma": "شحال من نبي مذكور فسورة مريم؟"
-    },
-    "options": {
-      "es": [
-        "5",
-        "8",
-        "10",
-        "16"
-      ],
-      "en": [
-        "5",
-        "8",
-        "10",
-        "16"
-      ],
-      "ma": [
-        "5",
-        "8",
-        "10",
-        "16"
-      ]
-    },
-    "correctAnswer": {
-      "es": "16",
-      "en": "16",
-      "ma": "16"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "La Surah Maryam menciona 16 profetas: Zakariya, Yahya, Isa, Ibrahim, Ismail, Idris, Nuh, Musa, Harun, y otros.",
-      "en": "Surah Maryam mentions 16 prophets: Zakariya, Yahya, Isa, Ibrahim, Ismail, Idris, Nuh, Musa, Harun, and others.",
-      "ma": "سورة مريم كتذكر 16 نبي: زكريا، يحيى، عيسى، إبراهيم، إسماعيل، إدريس، نوح، موسى، هارون، و غيرهم."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Los profetas nombrados explícitamente en Surah Maryam son aproximadamente 10-12: Zakariya, Yahya, Isa, Ibrahim, Ismail, Ishaq, Yaqub, Musa, Harun, Idris; más Adam y Nuh mencionados en 19:58. La cifra 16 no puede verificarse fácilmente sin una concordancia. La pregunta requiere verificación con estudios de ciencias coránicas especializadas."
-  },
-  {
-    "id": 343,
-    "question": {
-      "es": "¿Cuál es el nombre del Profeta cuyo nombre significa 'el alargado de vida'?",
-      "en": "What is the name of the Prophet whose name means 'the one with a long life'?",
-      "ma": "أشنو سميت النبي اللي يعني اسمو 'الطويل العمر'؟"
-    },
-    "options": {
-      "es": [
-        "Nuh",
-        "Idris",
-        "Luqman",
-        "Khidr"
-      ],
-      "en": [
-        "Nuh",
-        "Idris",
-        "Luqman",
-        "Khidr"
-      ],
-      "ma": [
-        "نوح",
-        "إدريس",
-        "لقمان",
-        "الخضر"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Nuh",
-      "en": "Nuh",
-      "ma": "نوح"
-    },
-    "category": "Profetas",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El Profeta Nuh vivió aproximadamente 950 años según el Corán, siendo el profeta con vida más larga mencionado en las escrituras islámicas.",
-      "en": "Prophet Nuh lived approximately 950 years according to the Quran, being the prophet with the longest life mentioned in Islamic scriptures.",
-      "ma": "النبي نوح عاش حوالي 950 سنة حسب القرآن، و هو النبي اللي عاش أطول فالكتابات الإسلامية."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "INCORRECTA: 'Nuh' (نوح) en árabe deriva de la raiz n-w-h que significa 'lamentarse/gemir'. No significa 'el alargado de vida'. Posiblemente confunde el nombre con la longevidad de Nuh (950 años) pero eso no es el significado del nombre. Esta pregunta debe ser eliminada o corregida."
-  },
-  {
     "id": 344,
     "question": {
       "es": "¿Cuál fue el don especial del Profeta Sulaiman que lo distinguía de otros profetas?",
@@ -14094,50 +13258,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 346,
-    "question": {
-      "es": "¿Cuántas veces se menciona el nombre de Ibrahim en el Corán?",
-      "en": "How many times is the name of Ibrahim mentioned in the Quran?",
-      "ma": "شحال من مرة تذكر اسم إبراهيم فالقرآن؟"
-    },
-    "options": {
-      "es": [
-        "25",
-        "63",
-        "80",
-        "100"
-      ],
-      "en": [
-        "25",
-        "63",
-        "80",
-        "100"
-      ],
-      "ma": [
-        "25",
-        "63",
-        "80",
-        "100"
-      ]
-    },
-    "correctAnswer": {
-      "es": "63",
-      "en": "63",
-      "ma": "63"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El nombre Ibrahim se menciona 63 veces en el Corán, siendo el segundo profeta más mencionado después de Musa.",
-      "en": "The name Ibrahim is mentioned 63 times in the Quran, being the second most mentioned prophet after Musa.",
-      "ma": "اسم إبراهيم تذكر 63 مرة فالقرآن، و هو ثاني نبي في الذكر من بعد موسى."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El número de veces que se menciona Ibrahim en el Corán varía según el estudio: algunas fuentes dicen 63, otras 69. La cifra exacta requiere verificación con Al-Mu'jam Al-Mufahras (concordancia coránica completa)."
   },
   {
     "id": 347,
@@ -14622,50 +13742,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 365,
-    "question": {
-      "es": "¿Cuál fue el nombre del primer esclavo que abrazó el Islam?",
-      "en": "Who was the first slave to embrace Islam?",
-      "ma": "شكون هو أول عبد دخل للإسلام؟"
-    },
-    "options": {
-      "es": [
-        "Zayd ibn Harithah",
-        "Bilal ibn Rabah",
-        "Ammar ibn Yasir",
-        "Suhayb al-Rumi"
-      ],
-      "en": [
-        "Zayd ibn Harithah",
-        "Bilal ibn Rabah",
-        "Ammar ibn Yasir",
-        "Suhayb al-Rumi"
-      ],
-      "ma": [
-        "زيد بن حارثة",
-        "بلال بن رباح",
-        "عمار بن ياسر",
-        "صهيب الرومي"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Zayd ibn Harithah",
-      "en": "Zayd ibn Harithah",
-      "ma": "زيد بن حارثة"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Zayd ibn Harithah, el hijo adoptivo del Profeta (ﷺ), fue el primer esclavo en abrazar el Islam, antes incluso de Bilal.",
-      "en": "Zayd ibn Harithah, the Prophet's (ﷺ) adopted son, was the first slave to embrace Islam, even before Bilal.",
-      "ma": "زيد بن حارثة، الابن المتبنى للنبي (ﷺ)، كان أول عبد دخل للإسلام، حتى قبل بلال."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Pregunta duplica la ambigüedad de ID 115. Zayd ibn Harithah era el liberto (mawla) del Profeta; si el criterio es 'esclavo en el momento de convertirse', sería Bilal ibn Rabah. Debe aclararse el matiz o eliminarse una de las dos preguntas (ID 115 y 365 son casi idénticas)."
   },
   {
     "id": 366,
@@ -15284,50 +14360,6 @@
     "correction_note": ""
   },
   {
-    "id": 382,
-    "question": {
-      "es": "¿Cuántas letras tiene el Corán aproximadamente?",
-      "en": "How many letters does the Quran have approximately?",
-      "ma": "شحال من حرف فالقرآن تقريبا؟"
-    },
-    "options": {
-      "es": [
-        "70,000",
-        "150,000",
-        "323,671",
-        "500,000"
-      ],
-      "en": [
-        "70,000",
-        "150,000",
-        "323,671",
-        "500,000"
-      ],
-      "ma": [
-        "70,000",
-        "150,000",
-        "323,671",
-        "500,000"
-      ]
-    },
-    "correctAnswer": {
-      "es": "323,671",
-      "en": "323,671",
-      "ma": "323,671"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El Corán contiene aproximadamente 323,671 letras según los estudios lingüísticos tradicionales.",
-      "en": "The Quran contains approximately 323,671 letters according to traditional linguistic studies.",
-      "ma": "القرآن فيه حوالي 323,671 حرف حسب الدراسات اللغوية التقليدية."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Pregunta duplicada de ID 154. El número exacto de letras del Corán (323,671) varía según el método de conteo entre fuentes; no está universalmente acordado. Eliminar duplicado."
-  },
-  {
     "id": 383,
     "question": {
       "es": "¿Cuál es el término para la recitación correcta del Corán con las reglas de pronunciación?",
@@ -15722,50 +14754,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 393,
-    "question": {
-      "es": "¿Cuántos ángeles se mencionan por nombre en el Corán?",
-      "en": "How many angels are mentioned by name in the Quran?",
-      "ma": "شحال من ملاك مذكور بالاسم فالقرآن؟"
-    },
-    "options": {
-      "es": [
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
-      "en": [
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
-      "ma": [
-        "2",
-        "3",
-        "4",
-        "5"
-      ]
-    },
-    "correctAnswer": {
-      "es": "3",
-      "en": "3",
-      "ma": "3"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Solo 3 ángeles son mencionados por nombre en el Corán: Jibril (2:97-98), Mikail (2:98) e Israfil (implícitamente en 39:68).",
-      "en": "Only 3 angels are mentioned by name in the Quran: Jibril (2:97-98), Mikail (2:98), and Israfil (implicitly in 39:68).",
-      "ma": "3 ملائكة فقط مذكورون بالاسم فالقرآن: جبريل (2:97-98)، ميكائيل (2:98)، و إسرافيل (بشكل ضمني في 39:68)."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El número de ángeles con nombre en el Corán es debatido. Claramente nombrados: Jibril (2:97, 66:4), Mikail (2:98), Malik (43:77) = 3 mínimo. Harut y Marut (2:102) también son nombrados. La respuesta '3' excluye a Harut y Marut. La pregunta debe especificar el criterio."
   },
   {
     "id": 394,
@@ -16956,50 +15944,6 @@
     "correction_note": ""
   },
   {
-    "id": 421,
-    "question": {
-      "es": "¿Quién liberó Jerusalén (Al-Quds) durante el califato de Umar?",
-      "en": "Who liberated Jerusalem (Al-Quds) during Umar's caliphate?",
-      "ma": "شكون حرر القدس فعهد خلافة عمر؟"
-    },
-    "options": {
-      "es": [
-        "Khalid ibn al-Walid",
-        "Sa'd ibn Abi Waqqas",
-        "Amr ibn al-As",
-        "Abu Ubayda ibn al-Jarrah"
-      ],
-      "en": [
-        "Khalid ibn al-Walid",
-        "Sa'd ibn Abi Waqqas",
-        "Amr ibn al-As",
-        "Abu Ubayda ibn al-Jarrah"
-      ],
-      "ma": [
-        "خالد بن الوليد",
-        "سعد بن أبي وقاص",
-        "عمرو بن العاص",
-        "أبو عبيدة بن الجراح"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Abu Ubayda ibn al-Jarrah",
-      "en": "Abu Ubayda ibn al-Jarrah",
-      "ma": "أبو عبيدة بن الجراح"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Abu Ubayda ibn al-Jarrah, comandante del ejército islámico en Siria, lideró la liberación de Jerusalén, aunque el Califa Umar viajó personalmente para recibir las llaves de la ciudad.",
-      "en": "Abu Ubayda ibn al-Jarrah, commander of the Islamic army in Syria, led the liberation of Jerusalem, although Caliph Umar personally traveled to receive the city's keys.",
-      "ma": "أبو عبيدة بن الجراح، قائد الجيش الإسلامي فالشام، قاد تحرير القدس، رغم أن الخليفة عمر سافر شخصيا لاستلام مفاتيح المدينة."
-    },
-    "source": "Seerah — Abu Ubayda ibn al-Jarrah lideró el asedio de Jerusalén (15 AH / 636 CE); sin embargo, el Patriarca Sofronio exigió rendirse solo ante el Califa, por lo que Umar ibn al-Khattab viajó personalmente a aceptar las llaves",
-    "verified": true,
-    "flag": true,
-    "correction_note": "AMBIGUA: Abu Ubayda lideró el asedio pero fue Umar ibn al-Khattab quien aceptó personalmente la rendición y las llaves de Jerusalén. La respuesta 'Abu Ubayda ibn al-Jarrah' es parcialmente correcta; una respuesta más precisa incluiría también a Umar. Considerar reformular la pregunta."
-  },
-  {
     "id": 422,
     "question": {
       "es": "¿Cuál fue el nombre del monje cristiano que reconoció al Profeta Muhammad (ﷺ) cuando era niño?",
@@ -17350,138 +16294,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 430,
-    "question": {
-      "es": "¿Cuántas veces se menciona la palabra 'Salat' (oración) en el Corán?",
-      "en": "How many times is the word 'Salat' (prayer) mentioned in the Quran?",
-      "ma": "شحال من مرة تذكر كلمة 'الصلاة' فالقرآن؟"
-    },
-    "options": {
-      "es": [
-        "5",
-        "17",
-        "67",
-        "100"
-      ],
-      "en": [
-        "5",
-        "17",
-        "67",
-        "100"
-      ],
-      "ma": [
-        "5",
-        "17",
-        "67",
-        "100"
-      ]
-    },
-    "correctAnswer": {
-      "es": "67",
-      "en": "67",
-      "ma": "67"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "La palabra 'Salat' y sus derivados se mencionan aproximadamente 67 veces en el Corán, destacando la importancia de la oración.",
-      "en": "The word 'Salat' and its derivatives are mentioned approximately 67 times in the Quran, highlighting the importance of prayer.",
-      "ma": "كلمة 'الصلاة' و مشتقاتها تذكر حوالي 67 مرة فالقرآن، مما يبرز أهمية الصلاة."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Pregunta duplicada de ID 164. El número exacto de veces que aparece 'Salat' en el Corán (67) requiere verificación con concordancia coránica. Eliminar duplicado."
-  },
-  {
-    "id": 431,
-    "question": {
-      "es": "¿Cuántas veces se menciona la palabra 'Zakat' en el Corán?",
-      "en": "How many times is the word 'Zakat' mentioned in the Quran?",
-      "ma": "شحال من مرة تذكر كلمة 'الزكاة' فالقرآن؟"
-    },
-    "options": {
-      "es": [
-        "10",
-        "27",
-        "32",
-        "50"
-      ],
-      "en": [
-        "10",
-        "27",
-        "32",
-        "50"
-      ],
-      "ma": [
-        "10",
-        "27",
-        "32",
-        "50"
-      ]
-    },
-    "correctAnswer": {
-      "es": "32",
-      "en": "32",
-      "ma": "32"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "La palabra 'Zakat' se menciona 32 veces en el Corán, generalmente junto a la palabra 'Salat', destacando que ambas están íntimamente relacionadas.",
-      "en": "The word 'Zakat' is mentioned 32 times in the Quran, usually alongside the word 'Salat', highlighting that both are intimately related.",
-      "ma": "كلمة 'الزكاة' تذكر 32 مرة فالقرآن، عادة جنب كلمة 'الصلاة'، مما يبرز أنهما مرتبطتان ارتباطا وثيقا."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El número exacto de veces que aparece 'Zakat' en el Corán (32 veces según algunas fuentes) requiere verificación con Al-Mu'jam Al-Mufahras. Diferentes conteos incluyen variantes léxicas (zakat, zakah, sadaqa con zakat)."
-  },
-  {
-    "id": 432,
-    "question": {
-      "es": "¿Cuántas veces se mencionan el Paraíso (Jannah) y el Infierno (Jahannam) en el Corán?",
-      "en": "How many times are Paradise (Jannah) and Hell (Jahannam) mentioned in the Quran?",
-      "ma": "شحال من مرة تذكر الجنة و جهنم فالقرآن؟"
-    },
-    "options": {
-      "es": [
-        "Jannah 77, Jahannam 77",
-        "Jannah 147, Jahannam 77",
-        "Jannah 77, Jahannam 147",
-        "Jannah 100, Jahannam 100"
-      ],
-      "en": [
-        "Jannah 77, Jahannam 77",
-        "Jannah 147, Jahannam 77",
-        "Jannah 77, Jahannam 147",
-        "Jannah 100, Jahannam 100"
-      ],
-      "ma": [
-        "الجنة 77، جهنم 77",
-        "الجنة 147، جهنم 77",
-        "الجنة 77، جهنم 147",
-        "الجنة 100، جهنم 100"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Jannah 147, Jahannam 77",
-      "en": "Jannah 147, Jahannam 77",
-      "ma": "الجنة 147، جهنم 77"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "En el Corán, la Jannah (Paraíso) se menciona aproximadamente 147 veces y Jahannam (Infierno) aproximadamente 77 veces.",
-      "en": "In the Quran, Jannah (Paradise) is mentioned approximately 147 times and Jahannam (Hell) approximately 77 times.",
-      "ma": "فالقرآن، الجنة تذكر حوالي 147 مرة و جهنم حوالي 77 مرة."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Los números exactos de menciones de Jannah (147) y Jahannam (77) en el Corán requieren verificación con concordancia coránica. Diferentes metodologías de conteo pueden dar resultados distintos."
   },
   {
     "id": 433,
@@ -17921,50 +16733,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 443,
-    "question": {
-      "es": "¿Cuál es el nombre del profeta mencionado en el Corán que no fue un humano?",
-      "en": "What is the name of the prophet mentioned in the Quran who was not a human?",
-      "ma": "أشنو سميت النبي المذكور فالقرآن اللي ما كانش إنسانا؟"
-    },
-    "options": {
-      "es": [
-        "Al-Khidr",
-        "Dhul-Qarnayn",
-        "Jibril",
-        "Luqman"
-      ],
-      "en": [
-        "Al-Khidr",
-        "Dhul-Qarnayn",
-        "Jibril",
-        "Luqman"
-      ],
-      "ma": [
-        "الخضر",
-        "ذو القرنين",
-        "جبريل",
-        "لقمان"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Jibril",
-      "en": "Jibril",
-      "ma": "جبريل"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Jibril (Gabriel) es el único ser no humano mencionado en el Corán que actuó como mensajero de Allah, aunque no se le llama 'profeta' sino 'Ruh al-Qudus' (Espíritu Santo) y 'ángel'.",
-      "en": "Jibril (Gabriel) is the only non-human being mentioned in the Quran who acted as Allah's messenger, though he is not called a 'prophet' but rather 'Ruh al-Qudus' (Holy Spirit) and 'angel'.",
-      "ma": "جبريل هو الكائن الوحيد غير البشري المذكور فالقرآن اللي اشتغل رسولا لله، واخا ما يتسماش 'نبيا' بل 'روح القدس' و 'ملاك'."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "INCORRECTA/AMBIGUA: La pregunta dice 'profeta mencionado en el Corán que no fue un humano' con respuesta Jibril. Pero Jibril NO es llamado 'nabi' (profeta) en el Corán — es un ángel (malak). La pregunta está mal formulada. Si pretende preguntar sobre un ser no-humano mencionado como mensajero divino, debe reformularse claramente."
   },
   {
     "id": 444,
@@ -19111,50 +17879,6 @@
     "correction_note": ""
   },
   {
-    "id": 472,
-    "question": {
-      "es": "¿Cuántos pilares tiene la Hajj?",
-      "en": "How many pillars does Hajj have?",
-      "ma": "شحال من ركن للحج؟"
-    },
-    "options": {
-      "es": [
-        "3",
-        "5",
-        "7",
-        "10"
-      ],
-      "en": [
-        "3",
-        "5",
-        "7",
-        "10"
-      ],
-      "ma": [
-        "3",
-        "5",
-        "7",
-        "10"
-      ]
-    },
-    "correctAnswer": {
-      "es": "5",
-      "en": "5",
-      "ma": "5"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Los 5 pilares (Arkan) de la Hajj son: 1. Ihram, 2. Wuquf en Arafat, 3. Tawaf al-Ifadha, 4. Sa'y entre Safa y Marwa, 5. Halq o Taqsir (afeitado o corte del cabello).",
-      "en": "The 5 pillars (Arkan) of Hajj are: 1. Ihram, 2. Wuquf at Arafat, 3. Tawaf al-Ifadha, 4. Sa'y between Safa and Marwa, 5. Halq or Taqsir (shaving or cutting hair).",
-      "ma": "الـ5 أركان الحج هي: 1. الإحرام، 2. الوقوف بعرفة، 3. طواف الإفاضة، 4. السعي بين الصفا و المروة، 5. الحلق أو التقصير."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Los pilares (arkan) del Hajj varían según la escuela jurídica. Hanafi: 2 (Wuquf y Tawaf al-Ifada); Maliki: 4-5; Shafi'i: 6 (Ihram, Wuquf, Tawaf, Sa'y, Halq, Orden); Hanbali: 4-5. La respuesta '5' corresponde a una escuela específica. La pregunta debe especificar según qué madhab."
-  },
-  {
     "id": 473,
     "question": {
       "es": "¿Qué es el 'Ihram' en la Hajj?",
@@ -19764,50 +18488,6 @@
     "correction_note": "El Quran no nombra el lugar; Babilonia (Ur) es la identificacion de la tradicion islamica"
   },
   {
-    "id": 489,
-    "question": {
-      "es": "¿Cuál fue el nombre de la madre de Ibrahim?",
-      "en": "What was the name of Ibrahim's mother?",
-      "ma": "أشنو كان اسم أم إبراهيم؟"
-    },
-    "options": {
-      "es": [
-        "Sarah",
-        "Hagar",
-        "Amthalai",
-        "Milkah"
-      ],
-      "en": [
-        "Sarah",
-        "Hagar",
-        "Amthalai",
-        "Milkah"
-      ],
-      "ma": [
-        "سارة",
-        "هاجر",
-        "امتلاي",
-        "ملكة"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Amthalai",
-      "en": "Amthalai",
-      "ma": "امتلاي"
-    },
-    "category": "Profetas",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Según tradiciones islámicas, la madre de Ibrahim se llamaba Amthalai (también escrita Umaythalat o bint Karnaba). El nombre del padre de Ibrahim fue Azar (Teraj en la Biblia).",
-      "en": "According to Islamic traditions, Ibrahim's mother was named Amthalai (also written Umaythalat or bint Karnaba). Ibrahim's father's name was Azar (Terah in the Bible).",
-      "ma": "حسب التقاليد الإسلامية، اسم أم إبراهيم كان امتلاي. اسم والد إبراهيم كان آزر (تارح فالكتاب المقدس)."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El nombre 'Amthalai bint Karnaba' para la madre de Ibrahim no aparece en el Quran ni en hadith sahih verificados. Aparece solo en algunos textos de Qisas al-Anbiya de autenticidad dudosa. Esta pregunta deberia eliminarse o reformularse con datos verificables."
-  },
-  {
     "id": 490,
     "question": {
       "es": "¿Quién fue Hajar y cuál fue su papel en el Islam?",
@@ -19980,50 +18660,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 494,
-    "question": {
-      "es": "¿Qué ocurrió cuando Ibrahim intentó arrojar a Ismail al fuego?",
-      "en": "What happened when Ibrahim attempted to sacrifice Ismail?",
-      "ma": "أشنو وقع فاش إبراهيم حاول يذبح إسماعيل؟"
-    },
-    "options": {
-      "es": [
-        "Allah interrumpió el sueño de Ibrahim",
-        "Un ángel descendió y sostuvo el cuchillo, y Allah reemplazó a Ismail con un carnero",
-        "Ismail se escapó",
-        "Ibrahim no pudo completar el sacrificio"
-      ],
-      "en": [
-        "Allah interrupted Ibrahim's dream",
-        "An angel descended and held the knife, and Allah replaced Ismail with a ram",
-        "Ismail escaped",
-        "Ibrahim was unable to complete the sacrifice"
-      ],
-      "ma": [
-        "الله قاطع حلم إبراهيم",
-        "ملاك نزل و أمسك السكين، و الله استبدل إسماعيل بكبش",
-        "إسماعيل هرب",
-        "إبراهيم ما قدرش يكمل الذبح"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Un ángel descendió y sostuvo el cuchillo, y Allah reemplazó a Ismail con un carnero",
-      "en": "An angel descended and held the knife, and Allah replaced Ismail with a ram",
-      "ma": "ملاك نزل و أمسك السكين، و الله استبدل إسماعيل بكبش"
-    },
-    "category": "Profetas",
-    "difficulty": "medium",
-    "explanation": {
-      "es": "Cuando Ibrahim estaba a punto de sacrificar a su hijo, Allah detuvo el acto: 'Llamamos a Ibrahim: ¡Ya has cumplido el sueño!' y reemplazó al niño con un gran carnero (37:104-107).",
-      "en": "When Ibrahim was about to sacrifice his son, Allah stopped the act: 'We called to Ibrahim: You have indeed fulfilled the vision!' and replaced the child with a great ram (37:104-107).",
-      "ma": "فاش إبراهيم كان على وشك يذبح ابنه، الله أوقف الأمر: 'نادَيناه أن يا إبراهيم قد صدّقتَ الرؤيا' و استبدل الطفل بكبش عظيم (37:104-107)."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "INCORRECTA: La pregunta dice 'arrojar a Ismail al fuego' pero Ibrahim NUNCA arrojo a Ismail al fuego. El evento del fuego fue sobre Ibrahim mismo (Quran 21:68-69). El evento del sacrificio es Quran 37:101-107 donde Allah ranscato al hijo con un carnero. Ademas, el angel sosteniendo el cuchillo NO esta en el Quran. Esta pregunta debe ser eliminada y reemplazada."
   },
   {
     "id": 495,
@@ -20551,50 +19187,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 507,
-    "question": {
-      "es": "¿Cuántos hadices contiene el Sahih Bukhari?",
-      "en": "How many hadith does Sahih Bukhari contain?",
-      "ma": "شحال من حديث فصحيح البخاري؟"
-    },
-    "options": {
-      "es": [
-        "3,000",
-        "5,000",
-        "7,275",
-        "10,000"
-      ],
-      "en": [
-        "3,000",
-        "5,000",
-        "7,275",
-        "10,000"
-      ],
-      "ma": [
-        "3,000",
-        "5,000",
-        "7,275",
-        "10,000"
-      ]
-    },
-    "correctAnswer": {
-      "es": "7,275",
-      "en": "7,275",
-      "ma": "7,275"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El Sahih Bukhari contiene aproximadamente 7,275 hadices (o 9,082 con repeticiones), recopilados por al-Bukhari de más de 600,000 hadices considerados.",
-      "en": "Sahih Bukhari contains approximately 7,275 hadith (or 9,082 with repetitions), compiled by al-Bukhari from more than 600,000 hadith considered.",
-      "ma": "صحيح البخاري فيه حوالي 7,275 حديث (أو 9,082 مع التكرار)، جمعها البخاري من أكثر من 600,000 حديث درسها."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Pregunta contradice ID 289 (que dice 7,563). El Sahih al-Bukhari tiene ~7,275 hadiths únicos o ~9,082 con repeticiones según diferentes metodologías de conteo. Ambas IDs 289 y 507 deben verificarse con edición crítica del Sahih."
   },
   {
     "id": 508,
@@ -21521,50 +20113,6 @@
     "correction_note": ""
   },
   {
-    "id": 531,
-    "question": {
-      "es": "¿Cuál fue la primera persona esclavizada en abrazar el Islam?",
-      "en": "Who was the first enslaved person to embrace Islam?",
-      "ma": "شكون كان أول شخص مستعبد دخل الإسلام؟"
-    },
-    "options": {
-      "es": [
-        "Bilal ibn Rabah",
-        "Zayd ibn Haritha",
-        "Abu Bakr",
-        "Al-Arqam"
-      ],
-      "en": [
-        "Bilal ibn Rabah",
-        "Zayd ibn Haritha",
-        "Abu Bakr",
-        "Al-Arqam"
-      ],
-      "ma": [
-        "بلال بن رباح",
-        "زيد بن حارثة",
-        "أبو بكر",
-        "الأرقم"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Zayd ibn Haritha",
-      "en": "Zayd ibn Haritha",
-      "ma": "زيد بن حارثة"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Zayd ibn Haritha fue el primer esclavo emancipado en abrazar el Islam. Bilal ibn Rabah fue el más famoso de los esclavos que abrazaron el Islam en las primeras etapas.",
-      "en": "Zayd ibn Haritha was the first freed slave to embrace Islam. Bilal ibn Rabah was the most famous of the slaves who embraced Islam in the early stages.",
-      "ma": "زيد بن حارثة كان أول عبد محرر أسلم. بلال بن رباح كان الأشهر بين العبيد اللي أسلموا فالمراحل الأولى."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Misma pregunta ambigua que IDs 115, 365, 611. Zayd ibn Haritha era el liberto (mawla) del Profeta; Bilal ibn Rabah fue el primer esclavo AÚN en esclavitud al convertirse. Pregunta repetida 4 veces — eliminar duplicados."
-  },
-  {
     "id": 532,
     "question": {
       "es": "¿Cuál fue la primera batalla de los musulmanes?",
@@ -22091,50 +20639,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 545,
-    "question": {
-      "es": "¿Cuántas esposas tuvo el Profeta Muhammad (ﷺ) durante su vida?",
-      "en": "How many wives did Prophet Muhammad (ﷺ) have during his lifetime?",
-      "ma": "شحال من زوجة كانت للنبي محمد (ﷺ) فحياتو؟"
-    },
-    "options": {
-      "es": [
-        "1",
-        "4",
-        "9",
-        "13"
-      ],
-      "en": [
-        "1",
-        "4",
-        "9",
-        "13"
-      ],
-      "ma": [
-        "1",
-        "4",
-        "9",
-        "13"
-      ]
-    },
-    "correctAnswer": {
-      "es": "13",
-      "en": "13",
-      "ma": "13"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "El Profeta Muhammad (ﷺ) tuvo 13 esposas en total durante su vida. La primera fue Khadijah, con quien estuvo por 25 años hasta su muerte. La última fue Maymunah bint al-Harith.",
-      "en": "Prophet Muhammad (ﷺ) had 13 wives in total during his lifetime. The first was Khadijah, with whom he was for 25 years until her death. The last was Maymunah bint al-Harith.",
-      "ma": "النبي محمد (ﷺ) كان له 13 زوجة إجمالا فحياته. الأولى كانت خديجة، ظل معها 25 سنة حتى وفاتها. الأخيرة كانت ميمونة بنت الحارث."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Las IDs 118 y 372 afirman que el Profeta tuvo 11 esposas (el número más aceptado por los ulemas), mientras que esta pregunta dice 13. El número 13 incluye a Rayhana bint Zayd y Maria al-Qibtiyya como esposas, aunque la mayoría de los ulemas las consideran ummahat al-awlad (concubinas) y no esposas con contrato de nikah formal. Pregunta contradictoria con el resto del banco."
   },
   {
     "id": 546,
@@ -22709,50 +21213,6 @@
     "correction_note": ""
   },
   {
-    "id": 565,
-    "question": {
-      "es": "¿Cuántas Suras mencionan explícitamente a los profetas?",
-      "en": "How many Surahs explicitly mention prophets?",
-      "ma": "شحال من سورة كتكلم صراحة عن الأنبياء؟"
-    },
-    "options": {
-      "es": [
-        "10",
-        "20",
-        "33",
-        "50"
-      ],
-      "en": [
-        "10",
-        "20",
-        "33",
-        "50"
-      ],
-      "ma": [
-        "10",
-        "20",
-        "33",
-        "50"
-      ]
-    },
-    "correctAnswer": {
-      "es": "33",
-      "en": "33",
-      "ma": "33"
-    },
-    "category": "Corán y General",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Aproximadamente 33 de las 114 Suras del Corán mencionan explícitamente a los profetas, y algunas Suras llevan el nombre de profetas (Yunus, Hud, Yusuf, Ibrahim, Maryam, etc.).",
-      "en": "Approximately 33 of the 114 Surahs of the Quran explicitly mention prophets, and some Surahs are named after prophets (Yunus, Hud, Yusuf, Ibrahim, Maryam, etc.).",
-      "ma": "تقريبا 33 من 114 سورة فالقرآن تذكر الأنبياء صراحة، و بعض السور تحمل أسماء أنبياء (يونس، هود، يوسف، إبراهيم، مريم، إلخ)."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: El número de Surahs que mencionan explícitamente a profetas varía según el criterio de conteo. La cifra 33 requiere verificación con concordancia coránica especializada."
-  },
-  {
     "id": 566,
     "question": {
       "es": "¿Cuál es la Sura del Corán que tiene el mayor número de nombres alternativos?",
@@ -23237,50 +21697,6 @@
     "correction_note": ""
   },
   {
-    "id": 606,
-    "question": {
-      "es": "¿Cuántos profetas del Corán son de la descendencia de Ibrahim?",
-      "en": "How many Quranic prophets are from Ibrahim's descendants?",
-      "ma": "شحال من نبي ف القرآن من ذرية إبراهيم؟"
-    },
-    "options": {
-      "es": [
-        "Ninguno",
-        "5",
-        "La mayoría de los profetas posteriores",
-        "Solo 2"
-      ],
-      "en": [
-        "None",
-        "5",
-        "Most of the subsequent prophets",
-        "Only 2"
-      ],
-      "ma": [
-        "حتى واحد",
-        "5",
-        "أغلب الأنبياء اللي جاو من بعد",
-        "غير 2"
-      ]
-    },
-    "correctAnswer": {
-      "es": "La mayoría de los profetas posteriores",
-      "en": "Most of the subsequent prophets",
-      "ma": "أغلب الأنبياء اللي جاو من بعد"
-    },
-    "category": "Profetas",
-    "difficulty": "medium",
-    "explanation": {
-      "es": "La descendencia de Ibrahim produjo a Ishaq, Yaqub, Yusuf, Musa, Dawud, Isa, entre otros.",
-      "en": "Ibrahim's line produced Isaac, Jacob, Joseph, Moses, David, Jesus, etc.",
-      "ma": "الذرية ديال إبراهيم خرجات إسحاق، يعقوب، يوسف، موسى، داوود، وعيسى وغيرهم."
-    },
-    "source": "Quran 6:84-86 enumera profetas de la descendencia de Ibrahim: Ishaq, Yaqub, Yusuf, Musa, Harun, Dawud, Sulaiman, Ayyub, Isa, Muhammad y otros; quran.com/6:84",
-    "verified": true,
-    "flag": true,
-    "correction_note": "AMBIGUA: Respuesta válida pero vaga. El Corán (6:84-86) menciona explícitamente más de 14 profetas de la descendencia de Ibrahim. 'La mayoría de los profetas posteriores' es aceptable como opción múltiple."
-  },
-  {
     "id": 607,
     "question": {
       "es": "¿Cuál fue la importancia del Isra wal-Mi'raj en la historia del Islam?",
@@ -23455,50 +21871,6 @@
     "verified": true,
     "flag": false,
     "correction_note": ""
-  },
-  {
-    "id": 611,
-    "question": {
-      "es": "¿Cuál fue el nombre del primer esclavo que abrazó el Islam?",
-      "en": "What was the name of the first slave to embrace Islam?",
-      "ma": "أشنو سمية أول عبد دخل للإسلام؟"
-    },
-    "options": {
-      "es": [
-        "Zayd ibn Harithah",
-        "Bilal ibn Rabah",
-        "Ammar ibn Yasir",
-        "Suhayb al-Rumi"
-      ],
-      "en": [
-        "Zayd ibn Harithah",
-        "Bilal ibn Rabah",
-        "Ammar ibn Yasir",
-        "Suhayb al-Rumi"
-      ],
-      "ma": [
-        "زيد بن حارثة",
-        "بلال بن رباح",
-        "عمار بن ياسر",
-        "صهيب الرومي"
-      ]
-    },
-    "correctAnswer": {
-      "es": "Zayd ibn Harithah",
-      "en": "Zayd ibn Harithah",
-      "ma": "زيد بن حارثة"
-    },
-    "category": "Seerah",
-    "difficulty": "hard",
-    "explanation": {
-      "es": "Zayd ibn Harithah, el hijo adoptivo del Profeta, fue el primer esclavo liberto en abrazar el Islam.",
-      "en": "Zayd ibn Harithah was the first slave to accept Islam.",
-      "ma": "زيد بن حارثة كان أول واحد من الموالي اللي سْلْم."
-    },
-    "source": "",
-    "verified": false,
-    "flag": true,
-    "correction_note": "AMBIGUA: Pregunta duplicada (4ª vez: IDs 115, 365, 531, 611). El problema de 'primer esclavo en abrazar el Islam' es ambiguo entre Zayd ibn Haritha (liberto del Profeta antes de la profecía) y Bilal ibn Rabah (esclavo aún cuando se convirtió). Eliminar 3 de las 4 preguntas duplicadas."
   },
   {
     "id": 612,
