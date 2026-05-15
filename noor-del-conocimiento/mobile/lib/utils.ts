@@ -1,7 +1,7 @@
 import type { Language } from "./types";
 
 // RTL languages in this app
-const RTL_LANGUAGES: Language[] = ["ma"];
+const RTL_LANGUAGES: Language[] = ["ar"];
 
 export const isRTL = (lang: Language): boolean => RTL_LANGUAGES.includes(lang);
 

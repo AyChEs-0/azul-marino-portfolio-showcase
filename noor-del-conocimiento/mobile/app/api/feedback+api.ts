@@ -77,12 +77,12 @@ interface FeedbackRequest {
   language: string;
 }
 
-const ALLOWED_LANGUAGES = new Set(["es", "en", "ma"]);
+const ALLOWED_LANGUAGES = new Set(["es", "en", "ar"]);
 
 const LANGUAGE_NAMES: Record<string, string> = {
   es: "Spanish",
   en: "English",
-  ma: "Moroccan Arabic (Darija)",
+  ar: "Modern Standard Arabic (فُصحى)",
 };
 
 // ── Handler ──────────────────────────────────────────────────────────────────

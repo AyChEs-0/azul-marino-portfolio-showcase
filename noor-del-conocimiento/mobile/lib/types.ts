@@ -1,18 +1,18 @@
 export type Difficulty = "easy" | "medium" | "hard";
 export type Category = "Profetas" | "Seerah" | "Corán y General";
 export type GameMode = Category | "mix";
-export type Language = "es" | "en" | "ma";
+export type Language = "es" | "en" | "ar";
 
 export interface MultilingualText {
   es: string;
   en: string;
-  ma: string;
+  ar: string;
 }
 
 export interface MultilingualOptions {
   es: string[];
   en: string[];
-  ma: string[];
+  ar: string[];
 }
 
 export interface Question {

@@ -11,15 +11,19 @@ const KEYS = {
 
 const MAX_MEMORY_SIZE = 150;
 
-const ALLOWED_LANGUAGES: Language[] = ["es", "en", "ma"];
+const ALLOWED_LANGUAGES: Language[] = ["es", "en", "ar"];
 
 // ── Idioma ─────────────────────────────────────────────────────────────────
 
 export const getStoredLanguage = async (): Promise<Language | null> => {
   try {
     const val = await AsyncStorage.getItem(KEYS.language);
-    if (val && (ALLOWED_LANGUAGES as string[]).includes(val)) {
-      return val as Language;
+    if (!val) return null;
+    // Migrate legacy "ma" (Moroccan Darija) to "ar" (Modern Standard Arabic)
+    const migrated = val === "ma" ? "ar" : val;
+    if ((ALLOWED_LANGUAGES as string[]).includes(migrated)) {
+      if (migrated !== val) await AsyncStorage.setItem(KEYS.language, migrated);
+      return migrated as Language;
     }
     return null;
   } catch {

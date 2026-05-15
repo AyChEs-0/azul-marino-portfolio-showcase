@@ -96,6 +96,19 @@
         "startGameButton": "Comenzar Partida Grupal",
         "backToHome": "Volver al inicio"
     },
+    "majlis": {
+        "player": "Jugador",
+        "addPlayer": "Añadir jugador",
+        "defaultPlayer": "Jugador",
+        "results": "Resultados del Majlis",
+        "eliminated": "Eliminado"
+    },
+    "game": {
+        "score": "Puntos",
+        "start": "Iniciar Majlis",
+        "playAgain": "Jugar de nuevo",
+        "backHome": "Volver al inicio"
+    },
     "play": {
         "score": "Puntuación",
         "round": "Ronda",

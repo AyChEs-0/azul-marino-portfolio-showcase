@@ -8,6 +8,9 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { Language } from "./types";
 
+// Extraer el nombre del modelo aquí para facilitar actualizaciones.
+const CLAUDE_MODEL = "claude-sonnet-4-6";
+
 interface FeedbackInput {
   question: string;
   correctAnswer: string;
@@ -18,7 +21,7 @@ interface FeedbackInput {
 const LANGUAGE_NAMES: Record<Language, string> = {
   es: "Spanish",
   en: "English",
-  ma: "Moroccan Arabic (Darija)",
+  ar: "Modern Standard Arabic (فُصحى)",
 };
 
 // ── Input sanitization (client side) ─────────────────────────────────────────
@@ -33,11 +36,13 @@ const INJECTION_PATTERNS = [
 ];
 
 function sanitize(raw: string, maxLen: number): string {
+  // Validate length BEFORE sanitizing to avoid processing huge inputs
+  if (raw.length > maxLen * 2) return "";
   let s = raw
     .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "")
     .slice(0, maxLen)
     .trim();
-  for (const p of INJECTION_PATTERNS) s = s.replace(p, "[redacted]");
+  for (const p of INJECTION_PATTERNS) s = s.replace(p, "[removed]");
   return s;
 }
 
@@ -68,20 +73,18 @@ async function fetchViaProxy(input: FeedbackInput): Promise<string> {
 async function fetchDirectly(input: FeedbackInput): Promise<string> {
   const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
   // If the key is absent the build is production — AI feedback disabled without proxy.
-  // For preview/test APKs, set EXPO_PUBLIC_ANTHROPIC_API_KEY as an EAS Build Secret.
   if (!apiKey) return "";
 
   const client = new Anthropic({
     apiKey,
-    // Required for the SDK to work in React Native (not a real browser)
     dangerouslyAllowBrowser: true,
   });
 
   const langName = LANGUAGE_NAMES[input.language];
-  const isRTL = input.language === "ma";
+  const isRTL = input.language === "ar";
 
   const message = await client.messages.create({
-    model: "claude-sonnet-4-6",
+    model: CLAUDE_MODEL,
     max_tokens: 256,
     messages: [
       {
@@ -93,7 +96,7 @@ Provide a brief, educational explanation (2-3 sentences max) that:
 2. Explains why the correct answer is right with Islamic context
 3. Adds a helpful memory aid or related fact
 
-CRITICAL: Respond ONLY in ${langName}.${isRTL ? " Write in right-to-left Darija Arabic." : ""}
+CRITICAL: Respond ONLY in ${langName}.${isRTL ? " Write in Modern Standard Arabic (فُصحى), right-to-left." : ""}
 Do NOT invent hadith, Quranic verses, or citations you are unsure of.
 Be warm, educational, and concise.
 
@@ -104,8 +107,9 @@ Student's answer: ${input.userAnswer}`,
     ],
   });
 
-  const block = message.content[0];
-  return block.type === "text" ? block.text.trim() : "";
+  // Validate response structure before accessing
+  if (!message.content.length || message.content[0].type !== "text") return "";
+  return message.content[0].text.trim();
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────
@@ -121,6 +125,7 @@ export const getAIFeedback = async (input: FeedbackInput): Promise<string> => {
     }
     return await fetchDirectly(safe);
   } catch {
+    // Return empty — caller shows a static fallback message
     return "";
   }
 };

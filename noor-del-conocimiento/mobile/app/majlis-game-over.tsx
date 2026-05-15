@@ -42,7 +42,7 @@ export default function MajlisGameOverScreen() {
         </View>
 
         <Text style={[styles.title, isRTL && { textAlign: "right" }]}>
-          {t("majlis.results") ?? "Resultados del Majlis"}
+          {t("majlis.results")}
         </Text>
 
         {/* Winner highlight */}
@@ -52,7 +52,7 @@ export default function MajlisGameOverScreen() {
             <Text style={styles.winnerName}>{rankings[0].name}</Text>
             <Text style={styles.winnerScore}>{Math.round(rankings[0].score)}</Text>
             <Text style={styles.winnerLabel}>
-              {t("game.score") ?? "Puntos"}
+              {t("game.score")}
             </Text>
           </NoorCard>
         )}
@@ -77,7 +77,7 @@ export default function MajlisGameOverScreen() {
                   </Text>
                   {player.isEliminated && (
                     <Text style={styles.eliminatedLabel}>
-                      {t("majlis.eliminated") ?? "Eliminado"}
+                      {t("playerStatus.eliminated")}
                     </Text>
                   )}
                 </View>
@@ -90,13 +90,13 @@ export default function MajlisGameOverScreen() {
         <View style={styles.buttons}>
           <NoorButton
             onPress={() => router.replace("/majlis-setup")}
-            label={t("game.playAgain") ?? "Jugar de nuevo"}
+            label={t("game.playAgain")}
             variant="primary"
             size="lg"
           />
           <NoorButton
             onPress={() => router.replace("/home")}
-            label={t("game.backHome") ?? "Volver al inicio"}
+            label={t("game.backHome")}
             variant="secondary"
             size="md"
           />

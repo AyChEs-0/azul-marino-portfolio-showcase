@@ -91,7 +91,7 @@ export default function HomeScreen() {
 
         {/* Language switcher — compact, top right */}
         <View style={styles.langRow}>
-          {(["es", "en", "ma"] as Language[]).map((lang) => (
+          {(["es", "en", "ar"] as Language[]).map((lang) => (
             <TouchableOpacity
               key={lang}
               onPress={() => setLanguage(lang)}

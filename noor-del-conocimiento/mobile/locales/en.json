@@ -96,6 +96,19 @@
         "startGameButton": "Start Group Game",
         "backToHome": "Back to home"
     },
+    "majlis": {
+        "player": "Player",
+        "addPlayer": "Add player",
+        "defaultPlayer": "Player",
+        "results": "Majlis Results",
+        "eliminated": "Eliminated"
+    },
+    "game": {
+        "score": "Points",
+        "start": "Start Majlis",
+        "playAgain": "Play again",
+        "backHome": "Back to home"
+    },
     "play": {
         "score": "Score",
         "round": "Round",

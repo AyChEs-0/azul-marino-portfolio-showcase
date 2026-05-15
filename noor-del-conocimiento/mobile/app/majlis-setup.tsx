@@ -52,7 +52,7 @@ export default function MajlisSetupScreen() {
     const sanitizeName = (raw: string, fallback: string) =>
       raw.replace(/[\x00-\x1F\x7F]/g, "").slice(0, 20).trim() || fallback;
     const names = playerNames.map((n, i) =>
-      sanitizeName(n, `Jugador ${i + 1}`)
+      sanitizeName(n, `${t("majlis.defaultPlayer")} ${i + 1}`)
     );
     const players = names.map((name, i) => createPlayer(`player_${i}`, name));
     router.push({

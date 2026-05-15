@@ -1,7 +1,7 @@
-// Timer bar — animates with spring physics, color shifts green→amber→red
-// Emil Kowalski: only animate transform + opacity (GPU-safe)
+// Timer bar — animates with linear easing (progress bars are linear, not spring)
+// Color shifts green→amber→red as time runs out.
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -15,25 +15,31 @@ interface TimerBarProps {
   totalTime: number;
 }
 
+const WINDOW_WIDTH = Dimensions.get("window").width;
+
 export const TimerBar: React.FC<TimerBarProps> = ({ timeLeft, totalTime }) => {
   const fraction = Math.max(0, timeLeft / totalTime);
-  const width = useSharedValue(fraction);
+  const widthPx = useSharedValue(fraction * WINDOW_WIDTH);
 
   useEffect(() => {
-    // Smooth continuous shrink — linear makes sense here (progress bar)
-    width.value = withTiming(fraction, {
+    widthPx.value = withTiming(fraction * WINDOW_WIDTH, {
       duration: 1000,
       easing: Easing.linear,
     });
   }, [fraction]);
 
   const animatedBar = useAnimatedStyle(() => ({
-    width: `${width.value * 100}%` as any,
-    backgroundColor: timerColor(width.value),
+    width: widthPx.value,
+    backgroundColor: timerColor(widthPx.value / WINDOW_WIDTH),
   }));
 
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      accessible
+      accessibilityRole="progressbar"
+      accessibilityValue={{ min: 0, max: totalTime, now: Math.ceil(timeLeft) }}
+    >
       <View style={styles.track}>
         <Animated.View style={[styles.bar, animatedBar]} />
       </View>
