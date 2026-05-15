@@ -1,73 +1,42 @@
-# Welcome to your Lovable project
+# Azul Marino — Portfolio Showcase
 
-## Project info
+Monorepo for Azul Marino's projects. Currently hosts **Noor del Conocimiento**, an Islamic trivia mobile app built with React Native + Expo.
 
-**URL**: https://lovable.dev/projects/88ca3d63-9d63-4eaa-992d-90db220b4056
+---
 
-## How can I edit this code?
+## Projects
 
-There are several ways of editing your application.
+### `noor-del-conocimiento/mobile/` — Noor del Conocimiento
 
-**Use Lovable**
+An Islamic knowledge quiz app available in **Spanish**, **English**, and **Moroccan Darija (Darija)**.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/88ca3d63-9d63-4eaa-992d-90db220b4056) and start prompting.
+**Features:**
+- 507 verified trivia questions across 3 categories: Corán y General, Profetas, Seerah
+- 3 difficulty levels: easy / medium / hard
+- Lifelines: 50/50, extra time, skip
+- AI-powered feedback for wrong answers (Claude API)
+- Multiplayer Majlis mode
+- Multilingual UI (es / en / ma)
 
-Changes made via Lovable will be committed automatically to this repo.
+**Tech stack:** Expo SDK 52 · React Native New Architecture · expo-router · react-native-reanimated · AsyncStorage · EAS Build
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+**Build & run:**
+```bash
+cd noor-del-conocimiento/mobile
+npm install
+npx expo start          # development
+eas build --platform android --profile preview  # cloud build
 ```
 
-**Edit a file directly in GitHub**
+**Environment:** copy `.env.example` → `.env` and fill in `ANTHROPIC_API_KEY`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## Root web app
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+A Vite + React + TypeScript + Tailwind web app (portfolio / tournament showcase). Run with:
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/88ca3d63-9d63-4eaa-992d-90db220b4056) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```bash
+npm install
+npm run dev
+```
