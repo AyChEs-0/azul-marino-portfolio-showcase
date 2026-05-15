@@ -33,7 +33,7 @@ interface NoorButtonProps {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export const NoorButton: React.FC<NoorButtonProps> = ({
+const NoorButtonBase: React.FC<NoorButtonProps> = ({
   onPress,
   label,
   variant = "primary",
@@ -89,6 +89,11 @@ export const NoorButton: React.FC<NoorButtonProps> = ({
     </AnimatedPressable>
   );
 };
+
+// Memoize the button — its props (label, variant, size, etc.) rarely change
+// for a given instance, so React skips re-renders when the parent updates.
+// Crucial in play.tsx where the parent re-renders every second from the timer.
+export const NoorButton = React.memo(NoorButtonBase);
 
 const getStyles = (variant: Variant, size: Size, disabled: boolean) => {
   const pad = { sm: 12, md: 16, lg: 20 }[size];

@@ -65,6 +65,7 @@ export default function PlayScreen() {
   const totalTime = getTimerDuration(difficulty);
 
   const [gameQuestions, setGameQuestions] = useState<Question[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [lives, setLives] = useState(INITIAL_LIVES);
@@ -80,7 +81,14 @@ export default function PlayScreen() {
   const [lastScore, setLastScore] = useState(0);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const endGameTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const timedOutRef = useRef(false);
+  const isAnsweredRef = useRef(false);
+  const endedRef = useRef(false);
+  // timeLeftRef mirrors timeLeft state — lets handleAnswer read the current
+  // time without listing timeLeft as a dep (which would invalidate the
+  // callback every second and break React.memo on AnswerOption children).
+  const timeLeftRef = useRef(totalTime);
 
   // Refs for latest callbacks — avoids stale closures in timer/timeout
   const endGameRef = useRef<(() => Promise<void>) | null>(null);
@@ -95,24 +103,42 @@ export default function PlayScreen() {
 
   // ── Load questions ──────────────────────────────────────────────────────────
   useEffect(() => {
+    let cancelled = false;
     const init = async () => {
       try {
         const played = await getPlayedQuestions();
-        const selected = selectGameQuestions(
+        let selected = selectGameQuestions(
           questions as Question[],
           category,
           difficulty,
           language,
           played
         );
+        // If the played-history exhausted the pool, retry ignoring history.
+        // Prevents the user from getting stuck on an empty deck.
+        if (selected.length === 0) {
+          selected = selectGameQuestions(
+            questions as Question[],
+            category,
+            difficulty,
+            language,
+            []
+          );
+        }
+        if (cancelled) return;
         setGameQuestions(selected);
         setMaxPoints(selected.length);
       } catch {
-        setGameQuestions([]);
+        if (!cancelled) setGameQuestions([]);
+      } finally {
+        if (!cancelled) setIsLoading(false);
       }
     };
     init();
-  }, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [category, difficulty, language]);
 
   // ── Reset state when question changes ───────────────────────────────────────
   useEffect(() => {
@@ -122,14 +148,27 @@ export default function PlayScreen() {
     setVisibleOptions(opts);
     setAnswerStates({});
     setIsAnswered(false);
+    isAnsweredRef.current = false;
     setAiFeedback(null);
     setTimeLeft(totalTime);
+    timeLeftRef.current = totalTime;
     timedOutRef.current = false;
   }, [currentIndex, language]);
 
-  // ── endGame ─────────────────────────────────────────────────────────────────
+  // ── Global cleanup on unmount — kill any pending timers/timeouts ────────────
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (endGameTimeoutRef.current) clearTimeout(endGameTimeoutRef.current);
+    };
+  }, []);
+
+  // ── endGame — guarded to run only once per game ─────────────────────────────
   const endGame = useCallback(async () => {
+    if (endedRef.current) return;
+    endedRef.current = true;
     if (timerRef.current) clearInterval(timerRef.current);
+    if (endGameTimeoutRef.current) clearTimeout(endGameTimeoutRef.current);
     const playedIds = gameQuestions.map((q) => q.id);
     await addPlayedQuestions(playedIds);
     const finalScore = calculateFinalScore(earnedPoints, maxPoints);
@@ -147,25 +186,28 @@ export default function PlayScreen() {
     });
   }, [gameQuestions, earnedPoints, maxPoints, correctCount, language, category, difficulty]);
 
-  // Keep ref current on every render
-  useEffect(() => { endGameRef.current = endGame; }, [endGame]);
+  // Assign ref directly during render — cheaper than useEffect, safe for refs
+  endGameRef.current = endGame;
 
-  // ── loseLife ────────────────────────────────────────────────────────────────
+  // ── loseLife — schedules endGame once, tracked via ref to allow cleanup ─────
   const loseLife = useCallback(() => {
     setLives((prev) => {
       const next = prev - 1;
-      if (next <= 0) {
-        // Use ref so we always call the latest endGame (not a stale closure)
-        setTimeout(() => endGameRef.current?.(), 1200);
+      if (next <= 0 && !endedRef.current && !endGameTimeoutRef.current) {
+        endGameTimeoutRef.current = setTimeout(() => {
+          endGameTimeoutRef.current = null;
+          endGameRef.current?.();
+        }, 1200);
       }
       return next;
     });
   }, []);
 
-  // ── handleTimeOut ───────────────────────────────────────────────────────────
+  // ── handleTimeOut — also guards against double-trigger after answer ─────────
   const handleTimeOut = useCallback(() => {
-    if (timedOutRef.current) return;
+    if (timedOutRef.current || isAnsweredRef.current) return;
     timedOutRef.current = true;
+    isAnsweredRef.current = true;
     if (timerRef.current) clearInterval(timerRef.current);
 
     // Read opts from ref — pure, no setState inside another setState updater
@@ -180,14 +222,18 @@ export default function PlayScreen() {
     loseLife();
   }, [currentQ, language, loseLife]);
 
-  // Keep ref current
-  useEffect(() => { handleTimeOutRef.current = handleTimeOut; }, [handleTimeOut]);
+  // Assign ref directly during render — refs don't need useEffect
+  handleTimeOutRef.current = handleTimeOut;
 
   // ── Timer — only decrements, NO side effects inside the updater ─────────────
   useEffect(() => {
     if (isAnswered || !currentQ) return;
     timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => (prev <= 1 ? 0 : prev - 1));
+      setTimeLeft((prev) => {
+        const next = prev <= 1 ? 0 : prev - 1;
+        timeLeftRef.current = next;
+        return next;
+      });
     }, 1000);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -199,20 +245,23 @@ export default function PlayScreen() {
     if (timeLeft === 0 && !isAnswered && currentQ) {
       handleTimeOutRef.current?.();
     }
-  }, [timeLeft]);
+  }, [timeLeft, isAnswered, currentQ]);
 
   // ── handleAnswer ─────────────────────────────────────────────────────────────
   const handleAnswer = useCallback(
     async (option: string) => {
-      if (isAnswered) return;
+      if (isAnswered || isAnsweredRef.current) return;
+      isAnsweredRef.current = true;
       if (timerRef.current) clearInterval(timerRef.current);
       setIsAnswered(true);
 
       const correct = currentQ.correctAnswer[language];
       const isCorrect = option === correct;
 
+      // Read options from ref — keeps handleAnswer stable through 50/50 reduce.
+      const opts = visibleOptionsRef.current;
       const newStates: Record<string, AnswerState> = {};
-      visibleOptions.forEach((opt) => {
+      opts.forEach((opt) => {
         if (opt === option) newStates[opt] = isCorrect ? "correct" : "incorrect";
         else if (opt === correct) newStates[opt] = "correct";
         else newStates[opt] = "idle";
@@ -220,7 +269,9 @@ export default function PlayScreen() {
       setAnswerStates(newStates);
 
       if (isCorrect) {
-        const pts = calculateQuestionScore(difficulty, timeLeft, totalTime, category);
+        // Read time from ref, not closure — keeps handleAnswer stable across
+        // timer ticks so memoized children don't re-render every second.
+        const pts = calculateQuestionScore(difficulty, timeLeftRef.current, totalTime, category);
         setEarnedPoints((prev) => prev + pts);
         setCorrectCount((prev) => prev + 1);
         setLastScore(pts);
@@ -257,12 +308,20 @@ export default function PlayScreen() {
         }
       }
     },
-    [isAnswered, currentQ, language, visibleOptions, timeLeft, totalTime, difficulty, category, loseLife]
+    // timeLeft and visibleOptions intentionally omitted — read via refs to
+    // keep handleAnswer stable so AnswerOption's React.memo remains effective.
+    [isAnswered, currentQ, language, totalTime, difficulty, category, loseLife]
   );
 
   // ── handleNext ───────────────────────────────────────────────────────────────
   const handleNext = useCallback(() => {
+    if (endedRef.current) return;
     if (currentIndex >= gameQuestions.length - 1 || lives <= 0) {
+      // Cancel the pending endGame timeout — we're ending now, no need to wait
+      if (endGameTimeoutRef.current) {
+        clearTimeout(endGameTimeoutRef.current);
+        endGameTimeoutRef.current = null;
+      }
       endGameRef.current?.();
     } else {
       setCurrentIndex((i) => i + 1);
@@ -281,7 +340,11 @@ export default function PlayScreen() {
 
   const useExtraTime = useCallback(() => {
     if (lifelines.extraTime <= 0 || isAnswered) return;
-    setTimeLeft((t) => t + EXTRA_TIME_BONUS);
+    setTimeLeft((t) => {
+      const next = t + EXTRA_TIME_BONUS;
+      timeLeftRef.current = next;
+      return next;
+    });
     setLifelines((l) => ({ ...l, extraTime: l.extraTime - 1 }));
   }, [lifelines.extraTime, isAnswered]);
 
@@ -299,12 +362,32 @@ export default function PlayScreen() {
     transform: [{ scale: scorePopScale.value }],
   }));
 
-  // ── Loading state ────────────────────────────────────────────────────────────
-  if (!currentQ) {
+  // ── Loading / empty-pool state ──────────────────────────────────────────────
+  if (isLoading) {
     return (
       <SafeAreaView style={styles.root}>
         <View style={styles.loading}>
           <Text style={styles.loadingText}>{t("loading.game") ?? "Cargando..."}</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (!currentQ) {
+    // No questions matched difficulty + category + language. Offer escape.
+    return (
+      <SafeAreaView style={styles.root}>
+        <View style={styles.loading}>
+          <Text style={styles.loadingText}>
+            {t("loading.noQuestions") ?? "No hay preguntas disponibles para esta combinación."}
+          </Text>
+          <NoorButton
+            onPress={() => router.replace("/home")}
+            label={t("game.backHome") ?? "Volver al inicio"}
+            variant="primary"
+            size="md"
+            style={{ marginTop: 20 }}
+          />
         </View>
       </SafeAreaView>
     );
@@ -367,7 +450,7 @@ export default function PlayScreen() {
               label={opt}
               index={i}
               state={answerStates[opt] ?? "idle"}
-              onPress={() => handleAnswer(opt)}
+              onSelect={handleAnswer}
               disabled={isAnswered}
               isRTL={isRTL}
             />

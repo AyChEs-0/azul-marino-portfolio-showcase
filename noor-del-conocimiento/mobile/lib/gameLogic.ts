@@ -110,7 +110,24 @@ export const selectGameQuestions = (
   language: Language,
   excludeIds: number[] = []
 ): Question[] => {
-  const pool = filterQuestions(questions, mode, difficulty, language, excludeIds);
+  let pool = filterQuestions(questions, mode, difficulty, language, excludeIds);
+
+  // If the strict pool can't fill a game, top up from neighboring difficulties
+  // (still respects the chosen mode/language). Better to play 15 questions
+  // mostly-on-difficulty than to play 3.
+  if (pool.length < TOTAL_QUESTIONS_PER_GAME) {
+    const otherDiffs: Difficulty[] = (["easy", "medium", "hard"] as Difficulty[])
+      .filter((d) => d !== difficulty);
+    const seen = new Set(pool.map((q) => q.id));
+    for (const d of otherDiffs) {
+      const extra = filterQuestions(questions, mode, d, language, excludeIds)
+        .filter((q) => !seen.has(q.id));
+      pool = pool.concat(extra);
+      for (const q of extra) seen.add(q.id);
+      if (pool.length >= TOTAL_QUESTIONS_PER_GAME) break;
+    }
+  }
+
   const shuffled = shuffleArray(pool);
   return shuffled.slice(0, TOTAL_QUESTIONS_PER_GAME);
 };

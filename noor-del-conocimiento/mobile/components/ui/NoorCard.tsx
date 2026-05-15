@@ -12,7 +12,7 @@ interface NoorCardProps {
   variant?: "dark" | "light" | "gold";
 }
 
-export const NoorCard: React.FC<NoorCardProps> = ({
+const NoorCardBase: React.FC<NoorCardProps> = ({
   children,
   style,
   innerStyle,
@@ -28,6 +28,7 @@ export const NoorCard: React.FC<NoorCardProps> = ({
     </View>
   );
 };
+export const NoorCard = React.memo(NoorCardBase);
 
 const cardStyles = {
   dark: StyleSheet.create({
